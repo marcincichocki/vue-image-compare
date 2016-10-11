@@ -12,6 +12,10 @@
     "clean:dist": "rimraf dist/",
     "clean:vendor": "rimraf node_modules/"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marcincichocki/vue-image-compare.git"
+  },
   "keywords": [
     "vue",
     "image",
