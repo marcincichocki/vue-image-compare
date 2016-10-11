@@ -1,7 +1,9 @@
 {
   "name": "vue-image-compare",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Compare two images via slider using vue.js",
+  "homepage": "https://github.com/marcincichocki/vue-image-compare",
+  "bugs": "https://github.com/marcincichocki/vue-image-compare/issues",
   "main": "dist/vue-image-compare.js",
   "scripts": {
     "build": "npm run build:dev && npm run build:prod",
@@ -11,6 +13,10 @@
     "clean": "npm run clean:dist && npm run clean:vendor",
     "clean:dist": "rimraf dist/",
     "clean:vendor": "rimraf node_modules/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marcincichocki/vue-image-compare.git"
   },
   "keywords": [
     "vue",
