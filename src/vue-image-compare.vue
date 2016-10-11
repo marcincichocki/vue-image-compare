@@ -34,7 +34,8 @@ export default {
   computed: {
     dimensions() {
       return {
-        width: `${this.width}px`
+        width: `${this.width}px`,
+        height: this.full ? `${this.height}px` : 'auto'
       }
     },
     posXPercent() {
@@ -44,6 +45,7 @@ export default {
   methods: {
     onResize() {
       this.width = this.$el.clientWidth;
+      this.height = this.$el.clientHeight;
       this.posX = this.width / 2;
     },
     onMouseDown() {
