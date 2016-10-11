@@ -47,6 +47,7 @@ just before closing body tag.
 | --- | --- | --- | --- | --- |
 | `before` | `String` | Path to the image image *before* change | `true` | `undefined` |
 | `after` | `String` | Path to the image image *after* change | `true` | `undefined` |
+| `full` | `Boolean` | Determines if images are stretched to fill parent element. Can be used with help of CSS `object-fit: cover` to create full page image comparison | `false` | `false` |
 
 ## License
 
