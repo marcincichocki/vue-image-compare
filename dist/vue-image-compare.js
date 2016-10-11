@@ -150,6 +150,10 @@ exports.default = {
     after: {
       type: String,
       required: true
+    },
+    full: {
+      type: Boolean,
+      default: false
     }
   },
   data: function data() {
@@ -163,7 +167,8 @@ exports.default = {
   computed: {
     dimensions: function dimensions() {
       return {
-        width: this.width + 'px'
+        width: this.width + 'px',
+        height: this.full ? this.height + 'px' : 'auto'
       };
     },
     posXPercent: function posXPercent() {
@@ -173,6 +178,7 @@ exports.default = {
   methods: {
     onResize: function onResize() {
       this.width = this.$el.clientWidth;
+      this.height = this.$el.clientHeight;
       this.posX = this.width / 2;
     },
     onMouseDown: function onMouseDown() {
@@ -218,7 +224,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, "\n.image-compare[data-v-1] {\n  position: relative;\n}\n.image-compare > img[data-v-1] {\n    display: block;\n}\n.image-compare > .image-compare-wrapper[data-v-1],\n  .image-compare > .image-compare-handle[data-v-1] {\n    bottom: 0;\n    position: absolute;\n    top: 0;\n}\n.image-compare > .image-compare-wrapper[data-v-1] {\n    left: 0;\n    overflow: hidden;\n    width: 100%;\n    z-index: 1;\n}\n.image-compare > .image-compare-handle[data-v-1] {\n    background-color: #fff;\n    cursor: ew-resize;\n    transform: translateX(-50%);\n    width: 2px;\n    z-index: 2;\n}\n", ""]);
+exports.push([module.i, "\n.image-compare[data-v-1] {\n  position: relative;\n}\n.image-compare.full[data-v-1] {\n    overflow: hidden;\n    height: 100%;\n    width: 100%;\n}\n.image-compare.full img[data-v-1] {\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 100%;\n      height: 100%;\n}\n.image-compare > img[data-v-1] {\n    display: block;\n}\n.image-compare > .image-compare-wrapper[data-v-1],\n  .image-compare > .image-compare-handle[data-v-1] {\n    bottom: 0;\n    position: absolute;\n    top: 0;\n}\n.image-compare > .image-compare-wrapper[data-v-1] {\n    left: 0;\n    overflow: hidden;\n    width: 100%;\n    z-index: 1;\n}\n.image-compare > .image-compare-handle[data-v-1] {\n    background-color: #fff;\n    cursor: ew-resize;\n    transform: translateX(-50%);\n    width: 2px;\n    z-index: 2;\n}\n", ""]);
 
 // exports
 
@@ -286,6 +292,9 @@ module.exports = function() {
 module.exports={render:function (){with(this) {
   return _h('figure', {
     staticClass: "image-compare",
+    class: {
+      full: full
+    },
     on: {
       "mousemove": function($event) {
         $event.preventDefault();
