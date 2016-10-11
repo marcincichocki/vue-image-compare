@@ -64,12 +64,14 @@ export default {
   },
   created() {
     window.addEventListener('mouseup', this.onMouseUp);
+    window.addEventListener('resize', this.onResize);
   },
   mounted() {
     this.onResize();
   },
   beforeDestroy() {
     window.removeEventListener('mouseup', this.onMouseUp);
+    window.removeEventListener('resize', this.onResize);
   }
 };
 </script>
