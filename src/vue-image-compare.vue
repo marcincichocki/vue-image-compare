@@ -18,6 +18,10 @@ export default {
     after: {
       type: String,
       required: true
+    },
+    full: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
