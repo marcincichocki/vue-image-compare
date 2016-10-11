@@ -33,7 +33,7 @@ new Vue({
 </div>
 ```
 
-If you are **not** using using es6, instead of importimg just add 
+If you are **not** using using es6, instead of importing add 
 
 ```html
 <script src="/path/to/vue-image-compare.js"></script>
