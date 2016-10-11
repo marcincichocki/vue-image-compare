@@ -197,12 +197,14 @@ exports.default = {
   },
   created: function created() {
     window.addEventListener('mouseup', this.onMouseUp);
+    window.addEventListener('resize', this.onResize);
   },
   mounted: function mounted() {
     this.onResize();
   },
   beforeDestroy: function beforeDestroy() {
     window.removeEventListener('mouseup', this.onMouseUp);
+    window.removeEventListener('resize', this.onResize);
   }
 };
 module.exports = exports['default'];
