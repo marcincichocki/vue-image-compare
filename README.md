@@ -44,7 +44,7 @@ just before closing body tag.
 ## Props
 
 | Name | Type | Description | Required | Default |
-| --- | --- |
+| --- | --- | --- | --- | --- |
 | `before` | `String` | Path to the image image *before* change | `true` | `undefined` |
 | `after` | `String` | Path to the image image *after* change | `true` | `undefined` |
 
