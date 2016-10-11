@@ -1,5 +1,5 @@
 <template>
-  <figure class="image-compare" @mousemove.prevent="onMouseMove">
+  <figure class="image-compare" :class="{ full }" @mousemove.prevent="onMouseMove">
     <div class="image-compare-wrapper" :style="{ width: posXPercent }">
       <img :src="before" :alt="before" :style="dimensions">
     </div>
@@ -18,6 +18,10 @@ export default {
     after: {
       type: String,
       required: true
+    },
+    full: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -30,7 +34,8 @@ export default {
   computed: {
     dimensions() {
       return {
-        width: `${this.width}px`
+        width: `${this.width}px`,
+        height: this.full ? `${this.height}px` : 'auto'
       }
     },
     posXPercent() {
@@ -40,6 +45,7 @@ export default {
   methods: {
     onResize() {
       this.width = this.$el.clientWidth;
+      this.height = this.$el.clientHeight;
       this.posX = this.width / 2;
     },
     onMouseDown() {
@@ -79,6 +85,20 @@ export default {
 <style lang="scss" scoped>
 .image-compare {
   position: relative;
+
+  &.full {
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
 
   > img {
     display: block;
