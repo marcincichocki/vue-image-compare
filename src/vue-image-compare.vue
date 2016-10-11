@@ -101,7 +101,8 @@ export default {
     }
   }
 
-  > img {
+  img {
+    max-width: none;
     display: block;
   }
 
