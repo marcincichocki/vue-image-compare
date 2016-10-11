@@ -1,5 +1,5 @@
 <template>
-  <figure class="image-compare" @mousemove.prevent="onMouseMove">
+  <figure class="image-compare" :class="{ full }" @mousemove.prevent="onMouseMove">
     <div class="image-compare-wrapper" :style="{ width: posXPercent }">
       <img :src="before" :alt="before" :style="dimensions">
     </div>
@@ -85,6 +85,20 @@ export default {
 <style lang="scss" scoped>
 .image-compare {
   position: relative;
+
+  &.full {
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
 
   > img {
     display: block;
