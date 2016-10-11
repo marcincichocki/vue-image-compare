@@ -1,0 +1,38 @@
+{
+  "name": "vue-image-compare",
+  "version": "0.0.0",
+  "description": "Compare two images via slider using vue.js",
+  "main": "dist/vue-image-compare.js",
+  "scripts": {
+    "build": "npm run build:dev && npm run build:prod",
+    "build:dev": "webpack",
+    "build:prod": "NODE_ENV=prod webpack",
+    "dev": "npm run build:dev -- --watch"
+  },
+  "keywords": [
+    "vue",
+    "image",
+    "compare",
+    "comparison",
+    "slider"
+  ],
+  "author": "Marcin Cichocki <marcincichocki1993@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "autoprefixer": "^6.5.0",
+    "babel-core": "^6.17.0",
+    "babel-loader": "^6.2.5",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-preset-es2015": "^6.16.0",
+    "css-loader": "^0.25.0",
+    "node-sass": "^3.10.1",
+    "sass-loader": "^4.0.2",
+    "vue-loader": "^9.5.1",
+    "vue-style-loader": "^1.0.0",
+    "webpack": "^2.1.0-beta.25"
+  },
+  "peerDependencies": {
+    "vue": "^2.0.0"
+  }
+}
