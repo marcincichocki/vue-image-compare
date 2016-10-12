@@ -1,5 +1,5 @@
 <template>
-  <figure class="image-compare" :class="{ full }" @mousemove.prevent="onMouseMove">
+  <figure class="image-compare" :class="{ full }" @mousemove.prevent="onMouseMove" @touchstart="onMouseMove($event, true)" @touchmove="onMouseMove($event, true)">
     <div class="image-compare-wrapper" :style="{ width: posXPercent }">
       <img :src="before" :alt="before" :style="dimensions">
     </div>
@@ -59,10 +59,10 @@ export default {
 
       this.isDragging = false;
     },
-    onMouseMove(event) {
-      if (this.isDragging && this.allowNextFrame) {
+    onMouseMove(event, isDragging = this.isDragging) {
+      if (isDragging && this.allowNextFrame) {
         this.allowNextFrame = false;
-        this.pageX = event.pageX;
+        this.pageX = event.pageX || event.targetTouches[0].pageX || event.originalEvent.targetTouches[0].pageX;
 
         window.requestAnimationFrame(this.updatePos);
       }
