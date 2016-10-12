@@ -1,5 +1,5 @@
 <template>
-  <figure class="image-compare" :class="{ full }" @mousemove.prevent="onMouseMove" @touchstart="onMouseMove($event, true)" @touchmove="onMouseMove($event, true)">
+  <figure class="image-compare" :class="{ full }" @mousemove.prevent="onMouseMove" @touchstart="onMouseMove($event, true)" @touchmove="onMouseMove($event, true)" @click="onMouseMove($event, true)">
     <div class="image-compare-wrapper" :style="{ width: posXPercent }">
       <img :src="before" :alt="before" :style="dimensions">
     </div>
