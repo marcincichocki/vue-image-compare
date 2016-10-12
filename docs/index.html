@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vue Image Compare - vue.js library used to compare 2 images by slider</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.2.1/css/bulma.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+  <style>
+    .image-compare.full img {
+      object-fit: cover;
+      font-family: 'object-fit: cover;'
+    }
+  </style>
+</head>
+<body>
+  <main id="app">
+    <section class="section is-medium">
+      <div class="container has-text-centered">
+        <p class="subtitle">
+          <strong>vue-image-compare</strong> is a <a href="//vuejs.org/">vue.js</a> library used to compare 2 images by slider.
+        </p>
+        <code>npm i vue-image-compare</code>
+        <div class="hero-buttons">
+          <a class="button is-large" href="//github.com/marcincichocki/vue-image-compare">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+            <span>GitHub</span>
+          </a>
+          <a class="button is-large" href="//www.npmjs.com/package/vue-image-compare">
+            <span>NPM</span>
+          </a>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <h1 class="title has-text-centered">Demos</h1>
+      <div class="container">
+        <div class="columns">
+          <div class="column is-half is-offset-one-quarter">
+            <p class="subtitle">Basic</p>
+            <image-compare :before="before" :after="after"/>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-half is-offset-one-quarter">
+            <p class="subtitle">Full page</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="hero is-fullheight">
+      <image-compare :before="before" :after="after" :full="true"/>
+    </div>
+    <section class="section">
+      <div class="container">
+        <p class="has-text-centered">For code samples and docs go to <a href="//github.com/marcincichocki/vue-image-compare#readme">github</a> page</p>
+      </div>
+    </section>
+    <footer class="footer">
+      <div class="container">
+        <div class="content has-text-centered">
+          <p>
+            Created by <br><a href="//github.com/marcincichocki">Marcin Cichocki</a><br>
+            <a href="//github.com/marcincichocki/vue-image-compare/blob/master/LICENSE">MIT</a>
+          </p>
+          <p>
+            <a class="icon" href="//github.com/marcincichocki/vue-image-compare">
+              <i class="fa fa-github"></i>
+            </a>
+          </p>
+        </div>
+      </div>
+    </footer>
+  </main>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.min.js"></script>
+  <script src="../dist/vue-image-compare.js"></script>
+  <!--<script src="https://rawgit.com/marcincichocki/vue-image-compare/master/dist/vue-image-compare.min.js"></script>-->
+  <script src="js/ofi.min.js"></script>
+  <script>
+    Vue.use(VueImageCompare);
+
+    var vm = new Vue({
+      data: function() {
+        return {
+          before: 'img/before.jpg',
+          after: 'img/after.jpg'
+        }
+      }
+    }).$mount('#app');
+
+    // object-fit polyfill for IEdge9-14, old android and safari
+    objectFitImages('.image-compare.full img');
+  </script>
+</body>
+</html>
