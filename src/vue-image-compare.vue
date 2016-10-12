@@ -123,14 +123,17 @@ export default {
     overflow: hidden;
     width: 100%;
     z-index: 1;
+    transform: translateZ(0);
+    will-change: width;
   }
 
   > .image-compare-handle {
     background-color: #fff;
     cursor: ew-resize;
-    transform: translateX(-50%);
+    transform: translateX(-50%) translateZ(0);
     width: 2px;
     z-index: 2;
+    will-change: left;
   }
 }
 </style>
