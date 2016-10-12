@@ -195,9 +195,11 @@ exports.default = {
       this.isDragging = false;
     },
     onMouseMove: function onMouseMove(event) {
-      if (this.isDragging && this.allowNextFrame) {
+      var isDragging = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.isDragging;
+
+      if (isDragging && this.allowNextFrame) {
         this.allowNextFrame = false;
-        this.pageX = event.pageX;
+        this.pageX = event.pageX || event.targetTouches[0].pageX || event.originalEvent.targetTouches[0].pageX;
 
         window.requestAnimationFrame(this.updatePos);
       }
@@ -230,7 +232,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, "\n.image-compare[data-v-2aa9daa6] {\n  position: relative;\n  margin: 0;\n}\n.image-compare.full[data-v-2aa9daa6] {\n    overflow: hidden;\n    height: 100%;\n    width: 100%;\n    -ms-flex: 1;\n        flex: 1;\n}\n.image-compare.full img[data-v-2aa9daa6] {\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 100%;\n      height: 100%;\n}\n.image-compare img[data-v-2aa9daa6] {\n    max-width: none;\n    display: block;\n}\n.image-compare > .image-compare-wrapper[data-v-2aa9daa6],\n  .image-compare > .image-compare-handle[data-v-2aa9daa6] {\n    bottom: 0;\n    position: absolute;\n    top: 0;\n}\n.image-compare > .image-compare-wrapper[data-v-2aa9daa6] {\n    left: 0;\n    overflow: hidden;\n    width: 100%;\n    z-index: 1;\n}\n.image-compare > .image-compare-handle[data-v-2aa9daa6] {\n    background-color: #fff;\n    cursor: ew-resize;\n    transform: translateX(-50%);\n    width: 2px;\n    z-index: 2;\n}\n", ""]);
+exports.push([module.i, "\n.image-compare[data-v-2aa9daa6] {\n  position: relative;\n  margin: 0;\n}\n.image-compare.full[data-v-2aa9daa6] {\n    overflow: hidden;\n    height: 100%;\n    width: 100%;\n    -ms-flex: 1;\n        flex: 1;\n}\n.image-compare.full img[data-v-2aa9daa6] {\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 100%;\n      height: 100%;\n}\n.image-compare img[data-v-2aa9daa6] {\n    max-width: none;\n    display: block;\n}\n.image-compare > .image-compare-wrapper[data-v-2aa9daa6],\n  .image-compare > .image-compare-handle[data-v-2aa9daa6] {\n    bottom: 0;\n    position: absolute;\n    top: 0;\n}\n.image-compare > .image-compare-wrapper[data-v-2aa9daa6] {\n    left: 0;\n    overflow: hidden;\n    width: 100%;\n    z-index: 1;\n    transform: translateZ(0);\n    will-change: width;\n}\n.image-compare > .image-compare-handle[data-v-2aa9daa6] {\n    background-color: #fff;\n    cursor: ew-resize;\n    transform: translateX(-50%) translateZ(0);\n    width: 2px;\n    z-index: 2;\n    will-change: left;\n}\n", ""]);
 
 // exports
 
@@ -305,6 +307,15 @@ module.exports={render:function (){with(this) {
       "mousemove": function($event) {
         $event.preventDefault();
         onMouseMove($event)
+      },
+      "touchstart": function($event) {
+        onMouseMove($event, true)
+      },
+      "touchmove": function($event) {
+        onMouseMove($event, true)
+      },
+      "click": function($event) {
+        onMouseMove($event, true)
       }
     }
   }, [_h('div', {
