@@ -99,9 +99,11 @@ __vue_options__ = __vue_exports__ = __vue_exports__.default
 if (typeof __vue_options__ === "function") {
   __vue_options__ = __vue_options__.options
 }
+__vue_options__.name = __vue_options__.name || "vue-image-compare"
+__vue_options__.__file = "/home/marcin/Dokumenty/Projekty/vue-image-compare/src/vue-image-compare.vue"
 __vue_options__.render = __vue_template__.render
 __vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-1"
+__vue_options__._scopeId = "data-v-2aa9daa6"
 
 /* hot reload */
 if (false) {(function () {
@@ -110,9 +112,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-1", __vue_options__)
+    hotAPI.createRecord("data-v-2aa9daa6", __vue_options__)
   } else {
-    hotAPI.reload("data-v-1", __vue_options__)
+    hotAPI.reload("data-v-2aa9daa6", __vue_options__)
   }
 })()}
 if (__vue_options__.functional) {console.error("[vue-loader] vue-image-compare.vue: functional components are not supported and should be defined in plain js files using render functions.")}
@@ -159,8 +161,11 @@ exports.default = {
   data: function data() {
     return {
       width: null,
+      height: null,
       pageX: null,
-      posX: null
+      posX: null,
+      isDragging: false,
+      allowNextFrame: true
     };
   },
 
@@ -190,15 +195,16 @@ exports.default = {
       this.isDragging = false;
     },
     onMouseMove: function onMouseMove(event) {
-      if (!this.isDragging) {
-        return;
-      }
+      if (this.isDragging && this.allowNextFrame) {
+        this.allowNextFrame = false;
+        this.pageX = event.pageX;
 
-      this.pageX = event.pageX;
-      window.requestAnimationFrame(this.updatePos);
+        window.requestAnimationFrame(this.updatePos);
+      }
     },
     updatePos: function updatePos() {
       this.posX = this.pageX - this.$el.getBoundingClientRect().left;
+      this.allowNextFrame = true;
     }
   },
   created: function created() {
@@ -224,7 +230,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, "\n.image-compare[data-v-1] {\n  position: relative;\n  margin: 0;\n}\n.image-compare.full[data-v-1] {\n    overflow: hidden;\n    height: 100%;\n    width: 100%;\n    -ms-flex: 1;\n        flex: 1;\n}\n.image-compare.full img[data-v-1] {\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 100%;\n      height: 100%;\n}\n.image-compare img[data-v-1] {\n    max-width: none;\n    display: block;\n}\n.image-compare > .image-compare-wrapper[data-v-1],\n  .image-compare > .image-compare-handle[data-v-1] {\n    bottom: 0;\n    position: absolute;\n    top: 0;\n}\n.image-compare > .image-compare-wrapper[data-v-1] {\n    left: 0;\n    overflow: hidden;\n    width: 100%;\n    z-index: 1;\n}\n.image-compare > .image-compare-handle[data-v-1] {\n    background-color: #fff;\n    cursor: ew-resize;\n    transform: translateX(-50%);\n    width: 2px;\n    z-index: 2;\n}\n", ""]);
+exports.push([module.i, "\n.image-compare[data-v-2aa9daa6] {\n  position: relative;\n  margin: 0;\n}\n.image-compare.full[data-v-2aa9daa6] {\n    overflow: hidden;\n    height: 100%;\n    width: 100%;\n    -ms-flex: 1;\n        flex: 1;\n}\n.image-compare.full img[data-v-2aa9daa6] {\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 100%;\n      height: 100%;\n}\n.image-compare img[data-v-2aa9daa6] {\n    max-width: none;\n    display: block;\n}\n.image-compare > .image-compare-wrapper[data-v-2aa9daa6],\n  .image-compare > .image-compare-handle[data-v-2aa9daa6] {\n    bottom: 0;\n    position: absolute;\n    top: 0;\n}\n.image-compare > .image-compare-wrapper[data-v-2aa9daa6] {\n    left: 0;\n    overflow: hidden;\n    width: 100%;\n    z-index: 1;\n}\n.image-compare > .image-compare-handle[data-v-2aa9daa6] {\n    background-color: #fff;\n    cursor: ew-resize;\n    transform: translateX(-50%);\n    width: 2px;\n    z-index: 2;\n}\n", ""]);
 
 // exports
 
@@ -334,7 +340,7 @@ module.exports={render:function (){with(this) {
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-1", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-2aa9daa6", module.exports)
   }
 }
 
@@ -576,8 +582,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-1&scoped=true!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./vue-image-compare.vue", function() {
-			var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-1&scoped=true!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./vue-image-compare.vue");
+		module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-2aa9daa6&scoped=true!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./vue-image-compare.vue", function() {
+			var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-2aa9daa6&scoped=true!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./vue-image-compare.vue");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
