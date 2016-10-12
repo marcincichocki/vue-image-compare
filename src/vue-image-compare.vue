@@ -85,6 +85,7 @@ export default {
 <style lang="scss" scoped>
 .image-compare {
   position: relative;
+  margin: 0;
 
   &.full {
     overflow: hidden;
