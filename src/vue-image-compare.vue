@@ -27,8 +27,10 @@ export default {
   data() {
     return {
       width: null,
+      height: null,
       pageX: null,
       posX: null,
+      isDragging: false,
       allowNextFrame: true
     }
   },
