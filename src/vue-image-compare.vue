@@ -28,7 +28,8 @@ export default {
     return {
       width: null,
       pageX: null,
-      posX: null
+      posX: null,
+      allowNextFrame: true
     }
   },
   computed: {
@@ -57,15 +58,16 @@ export default {
       this.isDragging = false;
     },
     onMouseMove(event) {
-      if (!this.isDragging) {
-        return;
-      }
+      if (this.isDragging && this.allowNextFrame) {
+        this.allowNextFrame = false;
+        this.pageX = event.pageX;
 
-      this.pageX = event.pageX;
-			window.requestAnimationFrame(this.updatePos);
+        window.requestAnimationFrame(this.updatePos);
+      }
 		},
     updatePos() {
       this.posX = this.pageX - this.$el.getBoundingClientRect().left;
+      this.allowNextFrame = true;
     }
   },
   created() {
