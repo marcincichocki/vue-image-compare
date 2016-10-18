@@ -22,6 +22,16 @@ export default {
     full: {
       type: Boolean,
       default: false
+    },
+    padding: {
+      type: Object,
+      default() {
+        return {
+          left: 0,
+          right: 0
+        }
+      },
+      required: false
     }
   },
   data() {
