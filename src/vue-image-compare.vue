@@ -56,7 +56,7 @@ export default {
     onResize() {
       this.width = this.$el.clientWidth;
       this.height = this.$el.clientHeight;
-      this.posX = this.width / 2;
+      this.setInitialPosX(this.padding.left + this.padding.right);
     },
     onMouseDown() {
 			this.isDragging = true;
@@ -85,6 +85,15 @@ export default {
 
       this.posX = posX;
       this.allowNextFrame = true;
+    },
+    setInitialPosX(padding) {
+      if (padding >= this.width) {
+        console.error('Sum of paddings is wider then parent element!');
+
+        return;
+      }
+
+      this.posX = (this.width + this.padding.left - this.padding.right) / 2;
     }
   },
   created() {
