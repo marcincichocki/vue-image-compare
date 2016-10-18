@@ -41,7 +41,8 @@ export default {
       pageX: null,
       posX: null,
       isDragging: false,
-      allowNextFrame: true
+      allowNextFrame: true,
+      unwatch: null
     }
   },
   computed: {
@@ -102,8 +103,13 @@ export default {
   },
   mounted() {
     this.onResize();
+    this.unwatch = this.$watch(
+      () => this.padding.left + this.padding.right,
+      (newValue) => this.setInitialPosX(newValue)
+    );
   },
   beforeDestroy() {
+    this.unwatch();
     window.removeEventListener('mouseup', this.onMouseUp);
     window.removeEventListener('resize', this.onResize);
   }
