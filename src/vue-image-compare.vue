@@ -1,10 +1,10 @@
 <template>
   <figure class="image-compare" :class="{ full }" @mousemove.prevent="onMouseMove" @touchstart="onMouseMove($event, true)" @touchmove="onMouseMove($event, true)" @click="onMouseMove($event, true)">
-    <div class="image-compare-wrapper" :style="{ width: posXPercent }">
+    <div class="image-compare-wrapper" :style="{ width: posX + 'px' }">
       <img :src="before" :alt="before" :style="dimensions">
     </div>
     <img :src="after" :alt="after" :style="dimensions">
-    <div class="image-compare-handle" :style="{ left: posXPercent }" @mousedown.prevent="onMouseDown"></div>
+    <div class="image-compare-handle" :style="{ left: posX + 'px' }" @mousedown.prevent="onMouseDown"></div>
   </figure>
 </template>
 
@@ -78,7 +78,15 @@ export default {
       }
 		},
     updatePos() {
-      this.posX = this.pageX - this.$el.getBoundingClientRect().left;
+      let posX = this.pageX - this.$el.getBoundingClientRect().left;
+
+      if (posX < this.padding.left) {
+        posX = this.padding.left;
+			} else if (posX > this.width - this.padding.right) {
+        posX = this.width - this.padding.right;
+      }
+
+      this.posX = posX;
       this.allowNextFrame = true;
     }
   },
