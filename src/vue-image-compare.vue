@@ -1,10 +1,10 @@
 <template>
   <figure class="image-compare" :class="{ full }" @mousemove.prevent="onMouseMove" @touchstart="onMouseMove($event, true)" @touchmove="onMouseMove($event, true)" @click="onMouseMove($event, true)">
-    <div class="image-compare-wrapper" :style="{ width: posXPercent }">
+    <div class="image-compare-wrapper" :style="{ width: posX + 'px' }">
       <img :src="before" :alt="before" :style="dimensions">
     </div>
     <img :src="after" :alt="after" :style="dimensions">
-    <div class="image-compare-handle" :style="{ left: posXPercent }" @mousedown.prevent="onMouseDown"></div>
+    <div class="image-compare-handle" :style="{ left: posX + 'px' }" @mousedown.prevent="onMouseDown"></div>
   </figure>
 </template>
 
@@ -22,6 +22,16 @@ export default {
     full: {
       type: Boolean,
       default: false
+    },
+    padding: {
+      type: Object,
+      default() {
+        return {
+          left: 0,
+          right: 0
+        }
+      },
+      required: false
     }
   },
   data() {
@@ -31,7 +41,8 @@ export default {
       pageX: null,
       posX: null,
       isDragging: false,
-      allowNextFrame: true
+      allowNextFrame: true,
+      unwatch: null
     }
   },
   computed: {
@@ -40,16 +51,13 @@ export default {
         width: `${this.width}px`,
         height: this.full ? `${this.height}px` : 'auto'
       }
-    },
-    posXPercent() {
-      return `${this.posX / this.width * 100}%`
     }
   },
   methods: {
     onResize() {
       this.width = this.$el.clientWidth;
       this.height = this.$el.clientHeight;
-      this.posX = this.width / 2;
+      this.setInitialPosX(this.padding.left + this.padding.right);
     },
     onMouseDown() {
 			this.isDragging = true;
@@ -68,8 +76,25 @@ export default {
       }
 		},
     updatePos() {
-      this.posX = this.pageX - this.$el.getBoundingClientRect().left;
+      let posX = this.pageX - this.$el.getBoundingClientRect().left;
+
+      if (posX < this.padding.left) {
+        posX = this.padding.left;
+			} else if (posX > this.width - this.padding.right) {
+        posX = this.width - this.padding.right;
+      }
+
+      this.posX = posX;
       this.allowNextFrame = true;
+    },
+    setInitialPosX(padding) {
+      if (padding >= this.width) {
+        console.error('Sum of paddings is wider then parent element!');
+
+        return;
+      }
+
+      this.posX = (this.width + this.padding.left - this.padding.right) / 2;
     }
   },
   created() {
@@ -78,8 +103,13 @@ export default {
   },
   mounted() {
     this.onResize();
+    this.unwatch = this.$watch(
+      () => this.padding.left + this.padding.right,
+      (newValue) => this.setInitialPosX(newValue)
+    );
   },
   beforeDestroy() {
+    this.unwatch();
     window.removeEventListener('mouseup', this.onMouseUp);
     window.removeEventListener('resize', this.onResize);
   }
