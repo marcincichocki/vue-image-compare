@@ -50,9 +50,6 @@ export default {
         width: `${this.width}px`,
         height: this.full ? `${this.height}px` : 'auto'
       }
-    },
-    posXPercent() {
-      return `${this.posX / this.width * 100}%`
     }
   },
   methods: {
