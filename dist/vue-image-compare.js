@@ -142,6 +142,13 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 exports.default = {
   props: {
@@ -266,7 +273,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, "\n.image-compare[data-v-2aa9daa6] {\n  position: relative;\n  margin: 0;\n}\n.image-compare.full[data-v-2aa9daa6] {\n    overflow: hidden;\n    height: 100%;\n    width: 100%;\n    -ms-flex: 1;\n        flex: 1;\n}\n.image-compare.full img[data-v-2aa9daa6] {\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 100%;\n      height: 100%;\n}\n.image-compare img[data-v-2aa9daa6] {\n    max-width: none;\n    display: block;\n}\n.image-compare > .image-compare-wrapper[data-v-2aa9daa6],\n  .image-compare > .image-compare-handle[data-v-2aa9daa6] {\n    bottom: 0;\n    position: absolute;\n    top: 0;\n}\n.image-compare > .image-compare-wrapper[data-v-2aa9daa6] {\n    left: 0;\n    overflow: hidden;\n    width: 100%;\n    z-index: 1;\n    transform: translateZ(0);\n    will-change: width;\n}\n.image-compare > .image-compare-handle[data-v-2aa9daa6] {\n    background-color: #fff;\n    cursor: ew-resize;\n    transform: translateX(-50%) translateZ(0);\n    width: 2px;\n    z-index: 2;\n    will-change: left;\n}\n", ""]);
+exports.push([module.i, "\n.image-compare[data-v-2aa9daa6] {\n  position: relative;\n  margin: 0;\n}\n.image-compare.full[data-v-2aa9daa6] {\n    overflow: hidden;\n    height: 100%;\n    width: 100%;\n    -ms-flex: 1;\n        flex: 1;\n}\n.image-compare.full img[data-v-2aa9daa6] {\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 100%;\n      height: 100%;\n}\n.image-compare img[data-v-2aa9daa6] {\n    max-width: none;\n    display: block;\n}\n.image-compare-wrapper[data-v-2aa9daa6],\n.image-compare-handle[data-v-2aa9daa6] {\n  bottom: 0;\n  position: absolute;\n  top: 0;\n}\n.image-compare-wrapper[data-v-2aa9daa6] {\n  left: 0;\n  overflow: hidden;\n  width: 100%;\n  z-index: 1;\n  transform: translateZ(0);\n  will-change: width;\n}\n.image-compare-handle[data-v-2aa9daa6] {\n  color: #fff;\n  background-color: currentColor;\n  cursor: ew-resize;\n  transform: translateX(-50%) translateZ(0);\n  width: 2px;\n  z-index: 2;\n  will-change: left;\n}\n.image-compare-handle-icon[data-v-2aa9daa6] {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  font-size: 2rem;\n  color: currentColor;\n  line-height: normal;\n}\n.image-compare-handle-icon.left[data-v-2aa9daa6] {\n    padding-right: 10px;\n    transform: translate(-100%, -50%);\n}\n.image-compare-handle-icon.right[data-v-2aa9daa6] {\n    padding-left: 10px;\n    transform: translate(0, -50%);\n}\n", ""]);
 
 // exports
 
@@ -380,7 +387,11 @@ module.exports={render:function (){with(this) {
         onMouseDown($event)
       }
     }
-  })])
+  }, [_h('span', {
+    staticClass: "image-compare-handle-icon left"
+  }, [_t("icon-left")]), " ", _h('span', {
+    staticClass: "image-compare-handle-icon right"
+  }, [_t("icon-right")])])])
 }},staticRenderFns: []}
 if (false) {
   module.hot.accept()
