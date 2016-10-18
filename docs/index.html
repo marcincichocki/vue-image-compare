@@ -60,6 +60,28 @@
     </div>
     <section class="section">
       <div class="container">
+        <div class="columns">
+          <div class="column is-half is-offset-one-quarter">
+            <p class="subtitle">Padding</p>
+            <image-compare :before="before" :after="after" :padding="padding"/>
+          </div>
+        </div>
+        <div class="columns">
+          <div class="column is-half is-offset-one-quarter">
+            <label class="label">Padding left(px)</label>
+            <p class="control">
+              <input class="input" type="text" v-model.number="padding.left">
+            </p>
+            <label class="label">Padding right(px)</label>
+            <p class="control">
+              <input class="input" type="text" v-model.number="padding.right">
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
         <p class="has-text-centered">For code samples and docs go to <a href="//github.com/marcincichocki/vue-image-compare#readme">github</a> page</p>
       </div>
     </section>
@@ -89,7 +111,11 @@
       data: function() {
         return {
           before: 'img/before.jpg',
-          after: 'img/after.jpg'
+          after: 'img/after.jpg',
+          padding: {
+            left: 50,
+            right: 50
+          }
         }
       }
     }).$mount('#app');
