@@ -156,6 +156,17 @@ exports.default = {
     full: {
       type: Boolean,
       default: false
+    },
+    padding: {
+      type: Object,
+      default: function _default() {
+        return {
+          left: 0,
+          right: 0
+        };
+      },
+
+      required: false
     }
   },
   data: function data() {
@@ -165,7 +176,8 @@ exports.default = {
       pageX: null,
       posX: null,
       isDragging: false,
-      allowNextFrame: true
+      allowNextFrame: true,
+      unwatch: null
     };
   },
 
@@ -175,16 +187,13 @@ exports.default = {
         width: this.width + 'px',
         height: this.full ? this.height + 'px' : 'auto'
       };
-    },
-    posXPercent: function posXPercent() {
-      return this.posX / this.width * 100 + '%';
     }
   },
   methods: {
     onResize: function onResize() {
       this.width = this.$el.clientWidth;
       this.height = this.$el.clientHeight;
-      this.posX = this.width / 2;
+      this.setInitialPosX(this.padding.left + this.padding.right);
     },
     onMouseDown: function onMouseDown() {
       this.isDragging = true;
@@ -205,8 +214,25 @@ exports.default = {
       }
     },
     updatePos: function updatePos() {
-      this.posX = this.pageX - this.$el.getBoundingClientRect().left;
+      var posX = this.pageX - this.$el.getBoundingClientRect().left;
+
+      if (posX < this.padding.left) {
+        posX = this.padding.left;
+      } else if (posX > this.width - this.padding.right) {
+        posX = this.width - this.padding.right;
+      }
+
+      this.posX = posX;
       this.allowNextFrame = true;
+    },
+    setInitialPosX: function setInitialPosX(padding) {
+      if (padding >= this.width) {
+        console.error('Sum of paddings is wider then parent element!');
+
+        return;
+      }
+
+      this.posX = (this.width + this.padding.left - this.padding.right) / 2;
     }
   },
   created: function created() {
@@ -214,9 +240,17 @@ exports.default = {
     window.addEventListener('resize', this.onResize);
   },
   mounted: function mounted() {
+    var _this = this;
+
     this.onResize();
+    this.unwatch = this.$watch(function () {
+      return _this.padding.left + _this.padding.right;
+    }, function (newValue) {
+      return _this.setInitialPosX(newValue);
+    });
   },
   beforeDestroy: function beforeDestroy() {
+    this.unwatch();
     window.removeEventListener('mouseup', this.onMouseUp);
     window.removeEventListener('resize', this.onResize);
   }
@@ -321,7 +355,7 @@ module.exports={render:function (){with(this) {
   }, [_h('div', {
     staticClass: "image-compare-wrapper",
     style: ({
-      width: posXPercent
+      width: posX + 'px'
     })
   }, [_h('img', {
     style: (dimensions),
@@ -338,7 +372,7 @@ module.exports={render:function (){with(this) {
   }), " ", _h('div', {
     staticClass: "image-compare-handle",
     style: ({
-      left: posXPercent
+      left: posX + 'px'
     }),
     on: {
       "mousedown": function($event) {
