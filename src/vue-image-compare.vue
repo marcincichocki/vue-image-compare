@@ -4,7 +4,14 @@
       <img :src="before" :alt="before" :style="dimensions">
     </div>
     <img :src="after" :alt="after" :style="dimensions">
-    <div class="image-compare-handle" :style="{ left: posX + 'px' }" @mousedown.prevent="onMouseDown"></div>
+    <div class="image-compare-handle" :style="{ left: posX + 'px' }" @mousedown.prevent="onMouseDown">
+      <span class="image-compare-handle-icon left">
+        <slot name="icon-left"></slot>
+      </span>
+      <span class="image-compare-handle-icon right">
+        <slot name="icon-right"></slot>
+      </span>
+    </div>
   </figure>
 </template>
 
@@ -140,30 +147,50 @@ export default {
     max-width: none;
     display: block;
   }
+}
 
-  > .image-compare-wrapper,
-  > .image-compare-handle {
-    bottom: 0;
-    position: absolute;
-    top: 0;
+.image-compare-wrapper,
+.image-compare-handle {
+  bottom: 0;
+  position: absolute;
+  top: 0;
+}
+
+.image-compare-wrapper {
+  left: 0;
+  overflow: hidden;
+  width: 100%;
+  z-index: 1;
+  transform: translateZ(0);
+  will-change: width;
+}
+
+.image-compare-handle {
+  color: #fff;
+  background-color: currentColor;
+  cursor: ew-resize;
+  transform: translateX(-50%) translateZ(0);
+  width: 2px;
+  z-index: 2;
+  will-change: left;
+}
+
+.image-compare-handle-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 2rem;
+  color: currentColor;
+  line-height: normal;
+
+  &.left {
+    padding-right: 10px;
+    transform: translate(-100%, -50%);
   }
 
-  > .image-compare-wrapper {
-    left: 0;
-    overflow: hidden;
-    width: 100%;
-    z-index: 1;
-    transform: translateZ(0);
-    will-change: width;
-  }
-
-  > .image-compare-handle {
-    background-color: #fff;
-    cursor: ew-resize;
-    transform: translateX(-50%) translateZ(0);
-    width: 2px;
-    z-index: 2;
-    will-change: left;
+  &.right {
+    padding-left: 10px;
+    transform: translate(0, -50%);
   }
 }
 </style>
