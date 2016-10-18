@@ -82,6 +82,19 @@
     </section>
     <section class="section">
       <div class="container">
+        <div class="columns">
+          <div class="column is-half is-offset-one-quarter">
+            <p class="subtitle">Icons</p>
+            <image-compare :before="before" :after="after" :padding="padding">
+              <i class="fa fa-angle-left" aria-hidden="true" slot="icon-left"></i>
+              <i class="fa fa-angle-right" aria-hidden="true" slot="icon-right"></i>
+            </image-compare>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
         <p class="has-text-centered">For code samples and docs go to <a href="//github.com/marcincichocki/vue-image-compare#readme">github</a> page</p>
       </div>
     </section>
