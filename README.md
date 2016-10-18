@@ -50,6 +50,20 @@ just before closing body tag.
 | `full` | `Boolean` | Determines if images are stretched to fill parent element. Can be used with help of CSS `object-fit: cover` to create full page image comparison | `false` | `false` |
 | `padding` | `Object` | Set left and right "padding" in pixels, so handle can **not** reach edge of an image | `false` | `{ left: 0, right: 0 }` | 
 
+## Slots
+
+- `icon-left` - element to be placed on the left side of the handle
+- `icon-right` - element to be placed on the right side of the handle
+
+Example: 
+
+```html
+<image-compare before="/img/before.jpg" after="/img/after.jpg" :padding="{ left: 50, right: 50 }">
+  <i class="fa fa-angle-left" aria-hidden="true" slot="icon-left"></i>
+  <i class="fa fa-angle-right" aria-hidden="true" slot="icon-right"></i>
+</image-compare>
+```
+
 ## License
 
 [MIT](/LICENSE)
