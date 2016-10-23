@@ -23,7 +23,8 @@
     "image",
     "compare",
     "comparison",
-    "slider"
+    "slider",
+    "component"
   ],
   "author": "Marcin Cichocki <marcincichocki1993@gmail.com>",
   "license": "MIT",
