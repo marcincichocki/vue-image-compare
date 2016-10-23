@@ -1,9 +1,9 @@
 <template>
   <figure class="image-compare" :class="{ full }" @mousemove.prevent="onMouseMove" @touchstart="onMouseMove($event, true)" @touchmove="onMouseMove($event, true)" @click="onMouseMove($event, true)">
     <div class="image-compare-wrapper" :style="{ width: posX + 'px' }">
-      <img :src="before" :alt="before" :style="dimensions">
+      <img :src="after" :alt="after" :style="dimensions">
     </div>
-    <img :src="after" :alt="after" :style="dimensions">
+    <img :src="before" :alt="before" :style="dimensions">
     <div class="image-compare-handle" :style="{ left: posX + 'px' }" @mousedown.prevent="onMouseDown">
       <span class="image-compare-handle-icon left">
         <slot name="icon-left"></slot>
