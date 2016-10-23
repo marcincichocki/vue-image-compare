@@ -174,6 +174,11 @@ exports.default = {
       },
 
       required: false
+    },
+    hideAfter: {
+      type: Boolean,
+      default: false,
+      required: false
     }
   },
   data: function data() {
@@ -360,6 +365,11 @@ module.exports={render:function (){with(this) {
       }
     }
   }, [_h('div', {
+    directives: [{
+      name: "show",
+      value: (!hideAfter),
+      expression: "!hideAfter"
+    }],
     staticClass: "image-compare-wrapper",
     style: ({
       width: posX + 'px'
@@ -377,6 +387,11 @@ module.exports={render:function (){with(this) {
       "alt": before
     }
   }), " ", _h('div', {
+    directives: [{
+      name: "show",
+      value: (!hideAfter),
+      expression: "!hideAfter"
+    }],
     staticClass: "image-compare-handle",
     style: ({
       left: posX + 'px'

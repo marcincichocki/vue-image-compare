@@ -95,6 +95,26 @@
     </section>
     <section class="section">
       <div class="container">
+        <div class="columns">
+          <div class="column is-half is-offset-one-quarter">
+            <p class="subtitle">Hide after</p>
+            <image-compare :before="before" :after="after" :hide-after="hideAfter"></image-compare>
+          </div>
+        </div>
+        <div class="columns">
+          <div class="column is-half is-offset-one-quarter">
+            <p class="control">
+              <label class="checkbox">
+                <input type="checkbox" v-model="hideAfter">
+                Hide after: {{ hideAfter }}
+              </label>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
         <p class="has-text-centered">For code samples and docs go to <a href="//github.com/marcincichocki/vue-image-compare#readme">github</a> page</p>
       </div>
     </section>
@@ -128,7 +148,8 @@
           padding: {
             left: 50,
             right: 50
-          }
+          },
+          hideAfter: true
         }
       }
     }).$mount('#app');
