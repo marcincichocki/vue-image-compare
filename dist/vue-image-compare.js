@@ -367,14 +367,14 @@ module.exports={render:function (){with(this) {
   }, [_h('img', {
     style: (dimensions),
     attrs: {
-      "src": before,
-      "alt": before
+      "src": after,
+      "alt": after
     }
   })]), " ", _h('img', {
     style: (dimensions),
     attrs: {
-      "src": after,
-      "alt": after
+      "src": before,
+      "alt": before
     }
   }), " ", _h('div', {
     staticClass: "image-compare-handle",
