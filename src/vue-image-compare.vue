@@ -1,10 +1,10 @@
 <template>
   <figure class="image-compare" :class="{ full }" @mousemove.prevent="onMouseMove" @touchstart="onMouseMove($event, true)" @touchmove="onMouseMove($event, true)" @click="onMouseMove($event, true)">
-    <div class="image-compare-wrapper" :style="{ width: posX + 'px' }">
+    <div class="image-compare-wrapper" :style="{ width: posX + 'px' }" v-show="!hideAfter">
       <img :src="after" :alt="after" :style="dimensions">
     </div>
     <img :src="before" :alt="before" :style="dimensions">
-    <div class="image-compare-handle" :style="{ left: posX + 'px' }" @mousedown.prevent="onMouseDown">
+    <div class="image-compare-handle" :style="{ left: posX + 'px' }" @mousedown.prevent="onMouseDown" v-show="!hideAfter">
       <span class="image-compare-handle-icon left">
         <slot name="icon-left"></slot>
       </span>
@@ -38,6 +38,11 @@ export default {
           right: 0
         }
       },
+      required: false
+    },
+    hideAfter: {
+      type: Boolean,
+      default: false,
       required: false
     }
   },
