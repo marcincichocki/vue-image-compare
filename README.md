@@ -45,11 +45,11 @@ just before closing body tag.
 
 | Name | Type | Description | Required | Default |
 | --- | --- | --- | --- | --- |
-| `before` | `String` | Path to the image image *before* change | `true` | `undefined` |
-| `after` | `String` | Path to the image image *after* change | `true` | `undefined` |
-| `full` | `Boolean` | Determines if images are stretched to fill parent element. Can be used with help of CSS `object-fit: cover` to create full page image comparison | `false` | `false` |
-| `padding` | `Object` | Set left and right "padding" in pixels, so handle can **not** reach edge of an image | `false` | `{ left: 0, right: 0 }` | 
-| `hideAfter` | `Boolean` | Hide image after and handle | `false` | `false` | 
+| `before` | `String` | Path to the image image *before* change | Yes | `undefined` |
+| `after` | `String` | Path to the image image *after* change | Yes | `undefined` |
+| `full` | `Boolean` | Determines if images are stretched to fill parent element. Can be used with help of CSS `object-fit: cover` to create full page image comparison | No | `false` |
+| `padding` | `Object` | Set left and right "padding" in pixels, so handle can **not** reach edge of an image | No | `{ left: 0, right: 0 }` |
+| `hideAfter` | `Boolean` | Hide image after and handle | No | `false` |
 
 ## Slots
 
