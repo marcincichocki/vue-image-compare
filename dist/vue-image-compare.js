@@ -79,6 +79,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
+var __vue_styles__ = {}
 
 /* styles */
 __webpack_require__(6)
@@ -99,7 +100,6 @@ __vue_options__ = __vue_exports__ = __vue_exports__.default
 if (typeof __vue_options__ === "function") {
   __vue_options__ = __vue_options__.options
 }
-__vue_options__.name = __vue_options__.name || "vue-image-compare"
 __vue_options__.__file = "/home/marcin/Dokumenty/Projekty/vue-image-compare/src/vue-image-compare.vue"
 __vue_options__.render = __vue_template__.render
 __vue_options__.staticRenderFns = __vue_template__.staticRenderFns
@@ -343,71 +343,74 @@ module.exports = function() {
 /* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
-module.exports={render:function (){with(this) {
-  return _h('figure', {
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('figure', {
     staticClass: "image-compare",
     class: {
-      full: full
+      full: _vm.full
     },
     on: {
       "mousemove": function($event) {
         $event.preventDefault();
-        onMouseMove($event)
+        _vm.onMouseMove($event)
       },
       "touchstart": function($event) {
-        onMouseMove($event, true)
+        _vm.onMouseMove($event, true)
       },
       "touchmove": function($event) {
-        onMouseMove($event, true)
+        _vm.onMouseMove($event, true)
       },
       "click": function($event) {
-        onMouseMove($event, true)
+        _vm.onMouseMove($event, true)
       }
     }
-  }, [_h('div', {
+  }, [_c('div', {
     directives: [{
       name: "show",
-      value: (!hideAfter),
+      rawName: "v-show",
+      value: (!_vm.hideAfter),
       expression: "!hideAfter"
     }],
     staticClass: "image-compare-wrapper",
     style: ({
-      width: posX + 'px'
+      width: _vm.posX + 'px'
     })
-  }, [_h('img', {
-    style: (dimensions),
+  }, [_c('img', {
+    style: (_vm.dimensions),
     attrs: {
-      "src": after,
-      "alt": after
+      "src": _vm.after,
+      "alt": _vm.after
     }
-  })]), " ", _h('img', {
-    style: (dimensions),
+  })]), _vm._v(" "), _c('img', {
+    style: (_vm.dimensions),
     attrs: {
-      "src": before,
-      "alt": before
+      "src": _vm.before,
+      "alt": _vm.before
     }
-  }), " ", _h('div', {
+  }), _vm._v(" "), _c('div', {
     directives: [{
       name: "show",
-      value: (!hideAfter),
+      rawName: "v-show",
+      value: (!_vm.hideAfter),
       expression: "!hideAfter"
     }],
     staticClass: "image-compare-handle",
     style: ({
-      left: posX + 'px'
+      left: _vm.posX + 'px'
     }),
     on: {
       "mousedown": function($event) {
         $event.preventDefault();
-        onMouseDown($event)
+        _vm.onMouseDown($event)
       }
     }
-  }, [_h('span', {
+  }, [_c('span', {
     staticClass: "image-compare-handle-icon left"
-  }, [_t("icon-left")]), " ", _h('span', {
+  }, [_vm._t("icon-left")], 2), _vm._v(" "), _c('span', {
     staticClass: "image-compare-handle-icon right"
-  }, [_t("icon-right")])])])
-}},staticRenderFns: []}
+  }, [_vm._t("icon-right")], 2)])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
