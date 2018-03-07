@@ -16,9 +16,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	function __webpack_require__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-/******/
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
@@ -43,16 +43,18 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
 /******/
-/******/ 	// identity function for calling harmory imports with the correct context
+/******/ 	// identity function for calling harmony imports with the correct context
 /******/ 	__webpack_require__.i = function(value) { return value; };
 /******/
-/******/ 	// define getter function for harmory exports
+/******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		Object.defineProperty(exports, name, {
-/******/ 			configurable: false,
-/******/ 			enumerable: true,
-/******/ 			get: getter
-/******/ 		});
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
@@ -71,39 +73,30 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-var __vue_exports__, __vue_options__
-var __vue_styles__ = {}
 
 /* styles */
-__webpack_require__(6)
+__webpack_require__(8)
 
-/* script */
-__vue_exports__ = __webpack_require__(1)
-
-/* template */
-var __vue_template__ = __webpack_require__(4)
-__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-if (
-  typeof __vue_exports__.default === "object" ||
-  typeof __vue_exports__.default === "function"
-) {
-if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-__vue_options__ = __vue_exports__ = __vue_exports__.default
-}
-if (typeof __vue_options__ === "function") {
-  __vue_options__ = __vue_options__.options
-}
-__vue_options__.__file = "/home/marcin/Dokumenty/Projekty/vue-image-compare/src/vue-image-compare.vue"
-__vue_options__.render = __vue_template__.render
-__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-2aa9daa6"
+var Component = __webpack_require__(5)(
+  /* script */
+  __webpack_require__(1),
+  /* template */
+  __webpack_require__(6),
+  /* scopeId */
+  "data-v-2fafb180",
+  /* cssModules */
+  null
+)
+Component.options.__file = "/home/sazarkin/Develop/External/vue-image-compare/src/vue-image-compare.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] vue-image-compare.vue: functional components are not supported with templates, they should use render functions.")}
 
 /* hot reload */
 if (false) {(function () {
@@ -112,22 +105,21 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-2aa9daa6", __vue_options__)
+    hotAPI.createRecord("data-v-2fafb180", Component.options)
   } else {
-    hotAPI.reload("data-v-2aa9daa6", __vue_options__)
+    hotAPI.reload("data-v-2fafb180", Component.options)
   }
 })()}
-if (__vue_options__.functional) {console.error("[vue-loader] vue-image-compare.vue: functional components are not supported and should be defined in plain js files using render functions.")}
 
-module.exports = __vue_exports__
+module.exports = Component.exports
 
 
-/***/ },
+/***/ }),
 /* 1 */
-/***/ function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-'use strict';
+
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -179,6 +171,11 @@ exports.default = {
       type: Boolean,
       default: false,
       required: false
+    },
+    zoom: {
+      type: Number,
+      default: 1,
+      required: false
     }
   },
   data: function data() {
@@ -197,7 +194,8 @@ exports.default = {
     dimensions: function dimensions() {
       return {
         width: this.width + 'px',
-        height: this.full ? this.height + 'px' : 'auto'
+        height: this.full ? this.height + 'px' : 'auto',
+        transform: 'scale(' + this.zoom + ')'
       };
     }
   },
@@ -269,23 +267,47 @@ exports.default = {
 };
 module.exports = exports['default'];
 
-/***/ },
+/***/ }),
 /* 2 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)();
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _vueImageCompare = __webpack_require__(0);
+
+var _vueImageCompare2 = _interopRequireDefault(_vueImageCompare);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+  install: function install(Vue) {
+    Vue.component('image-compare', _vueImageCompare2.default);
+  }
+};
+module.exports = exports['default'];
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(4)();
 // imports
 
 
 // module
-exports.push([module.i, "\n.image-compare[data-v-2aa9daa6] {\n  position: relative;\n  margin: 0;\n}\n.image-compare.full[data-v-2aa9daa6] {\n    overflow: hidden;\n    height: 100%;\n    width: 100%;\n    -ms-flex: 1;\n        flex: 1;\n}\n.image-compare.full img[data-v-2aa9daa6] {\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 100%;\n      height: 100%;\n}\n.image-compare img[data-v-2aa9daa6] {\n    max-width: none;\n    display: block;\n}\n.image-compare-wrapper[data-v-2aa9daa6],\n.image-compare-handle[data-v-2aa9daa6] {\n  bottom: 0;\n  position: absolute;\n  top: 0;\n}\n.image-compare-wrapper[data-v-2aa9daa6] {\n  left: 0;\n  overflow: hidden;\n  width: 100%;\n  z-index: 1;\n  transform: translateZ(0);\n  will-change: width;\n}\n.image-compare-handle[data-v-2aa9daa6] {\n  color: #fff;\n  background-color: currentColor;\n  cursor: ew-resize;\n  transform: translateX(-50%) translateZ(0);\n  width: 2px;\n  z-index: 2;\n  will-change: left;\n}\n.image-compare-handle-icon[data-v-2aa9daa6] {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  font-size: 2rem;\n  color: currentColor;\n  line-height: normal;\n}\n.image-compare-handle-icon.left[data-v-2aa9daa6] {\n    padding-right: 10px;\n    transform: translate(-100%, -50%);\n}\n.image-compare-handle-icon.right[data-v-2aa9daa6] {\n    padding-left: 10px;\n    transform: translate(0, -50%);\n}\n", ""]);
+exports.push([module.i, "\n.image-compare[data-v-2fafb180] {\n  position: relative;\n  margin: 0;\n  overflow: hidden;\n}\n.image-compare.full[data-v-2fafb180] {\n    overflow: hidden;\n    height: 100%;\n    width: 100%;\n    -ms-flex: 1;\n        flex: 1;\n}\n.image-compare.full img[data-v-2fafb180] {\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 100%;\n      height: 100%;\n}\n.image-compare img[data-v-2fafb180] {\n    max-width: none;\n    display: block;\n    transition: all .2s ease-in-out;\n}\n.image-compare-wrapper[data-v-2fafb180],\n.image-compare-handle[data-v-2fafb180] {\n  bottom: 0;\n  position: absolute;\n  top: 0;\n}\n.image-compare-wrapper[data-v-2fafb180] {\n  left: 0;\n  overflow: hidden;\n  width: 100%;\n  z-index: 1;\n  transform: translateZ(0);\n  will-change: width;\n}\n.image-compare-handle[data-v-2fafb180] {\n  color: #fff;\n  background-color: currentColor;\n  cursor: ew-resize;\n  transform: translateX(-50%) translateZ(0);\n  width: 2px;\n  z-index: 2;\n  will-change: left;\n}\n.image-compare-handle-icon[data-v-2fafb180] {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  font-size: 2rem;\n  color: currentColor;\n  line-height: normal;\n}\n.image-compare-handle-icon.left[data-v-2fafb180] {\n    padding-right: 10px;\n    transform: translate(-100%, -50%);\n}\n.image-compare-handle-icon.right[data-v-2fafb180] {\n    padding-left: 10px;\n    transform: translate(0, -50%);\n}\n", ""]);
 
 // exports
 
 
-/***/ },
-/* 3 */
-/***/ function(module, exports) {
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
 
 /*
 	MIT License http://www.opensource.org/licenses/mit-license.php
@@ -339,9 +361,62 @@ module.exports = function() {
 };
 
 
-/***/ },
-/* 4 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+module.exports = function normalizeComponent (
+  rawScriptExports,
+  compiledTemplate,
+  scopeId,
+  cssModules
+) {
+  var esModule
+  var scriptExports = rawScriptExports = rawScriptExports || {}
+
+  // ES6 modules interop
+  var type = typeof rawScriptExports.default
+  if (type === 'object' || type === 'function') {
+    esModule = rawScriptExports
+    scriptExports = rawScriptExports.default
+  }
+
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (compiledTemplate) {
+    options.render = compiledTemplate.render
+    options.staticRenderFns = compiledTemplate.staticRenderFns
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = scopeId
+  }
+
+  // inject cssModules
+  if (cssModules) {
+    var computed = options.computed || (options.computed = {})
+    Object.keys(cssModules).forEach(function (key) {
+      var module = cssModules[key]
+      computed[key] = function () { return module }
+    })
+  }
+
+  return {
+    esModule: esModule,
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('figure', {
@@ -414,13 +489,13 @@ module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-2aa9daa6", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-2fafb180", module.exports)
   }
 }
 
-/***/ },
-/* 5 */
-/***/ function(module, exports) {
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
 
 /*
 	MIT License http://www.opensource.org/licenses/mit-license.php
@@ -640,24 +715,24 @@ function applyToTag(styleElement, obj) {
 }
 
 
-/***/ },
-/* 6 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(2);
+var content = __webpack_require__(3);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
-var update = __webpack_require__(5)(content, {});
+var update = __webpack_require__(7)(content, {});
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-2aa9daa6&scoped=true!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./vue-image-compare.vue", function() {
-			var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-2aa9daa6&scoped=true!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./vue-image-compare.vue");
+		module.hot.accept("!!../node_modules/css-loader/index.js!../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-2fafb180&scoped=true!../node_modules/sass-loader/index.js!../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./vue-image-compare.vue", function() {
+			var newContent = require("!!../node_modules/css-loader/index.js!../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-2fafb180&scoped=true!../node_modules/sass-loader/index.js!../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./vue-image-compare.vue");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -666,32 +741,7 @@ if(false) {
 	module.hot.dispose(function() { update(); });
 }
 
-/***/ },
-/* 7 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
+/***/ })
+/******/ ]);
 });
-
-var _vueImageCompare = __webpack_require__(0);
-
-var _vueImageCompare2 = _interopRequireDefault(_vueImageCompare);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = {
-  install: function install(Vue) {
-    Vue.component('image-compare', _vueImageCompare2.default);
-  }
-};
-module.exports = exports['default'];
-
-/***/ }
-/******/ ])
-});
-;
 //# sourceMappingURL=vue-image-compare.js.map
