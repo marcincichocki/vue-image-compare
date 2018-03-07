@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Vue Image Compare - vue.js component used to compare 2 images by slider</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.2.1/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
   <style>
     .image-compare.full img {
@@ -41,7 +41,25 @@
         <div class="columns">
           <div class="column is-half is-offset-one-quarter">
             <p class="subtitle">Basic</p>
-            <image-compare :before="before" :after="after"/>
+
+            <div class="field has-addons">
+              <p class="control">
+                <a class="button" @click.prevent="zoom = Math.min(zoom + 0.5, 3)">
+                  <span class="icon is-small">
+                    <i class="fa fa-search-plus"></i>
+                  </span>
+                </a>
+              </p>
+              <p class="control">
+                <a class="button" @click.prevent="zoom = Math.max(zoom - 0.5, 1)">
+                  <span class="icon is-small">
+                    <i class="fa fa-search-minus"></i>
+                  </span>
+                </a>
+              </p>
+            </div>
+
+            <image-compare :before="before" :after="after" :zoom="zoom"></image-compare>
           </div>
         </div>
       </div>
@@ -135,7 +153,7 @@
     </footer>
   </main>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js"></script>
-  <script src="https://rawgit.com/marcincichocki/vue-image-compare/master/dist/vue-image-compare.min.js"></script>
+  <script src="../dist/vue-image-compare.js"></script>
   <script src="js/ofi.min.js"></script>
   <script>
     Vue.use(VueImageCompare);
@@ -143,6 +161,7 @@
     var vm = new Vue({
       data: function() {
         return {
+          zoom: 1,
           before: 'img/before.jpg',
           after: 'img/after.jpg',
           padding: {

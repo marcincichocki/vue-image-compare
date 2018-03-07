@@ -44,6 +44,11 @@ export default {
       type: Boolean,
       default: false,
       required: false
+    },
+    zoom: {
+      type: Number,
+      default: 1,
+      required: false,
     }
   },
   data() {
@@ -61,7 +66,8 @@ export default {
     dimensions() {
       return {
         width: `${this.width}px`,
-        height: this.full ? `${this.height}px` : 'auto'
+        height: this.full ? `${this.height}px` : 'auto',
+        transform: `scale(${this.zoom})`,
       }
     }
   },
@@ -132,6 +138,7 @@ export default {
 .image-compare {
   position: relative;
   margin: 0;
+  overflow: hidden;
 
   &.full {
     overflow: hidden;
@@ -151,6 +158,7 @@ export default {
   img {
     max-width: none;
     display: block;
+    transition: all .2s ease-in-out;
   }
 }
 
