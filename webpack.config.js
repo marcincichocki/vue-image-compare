@@ -29,7 +29,7 @@ module.exports = function makeWebpackConfig() {
   var config = {
     entry: './src/index.js',
     output: {
-      path: './dist/',
+      path: __dirname + '/dist/',
       filename: outputFileName,
       library: 'VueImageCompare',
       libraryTarget: 'umd'
@@ -45,29 +45,29 @@ module.exports = function makeWebpackConfig() {
       loaders: [
         {
           test: /\.vue$/,
-          loader: 'vue'
+          loader: 'vue-loader',
+          options: {
+            postcss: [
+              autoprefixer({
+                browsers: ['last 2 versions', 'ie >= 10']
+              })
+            ],
+            loaders: {
+              scss: [
+                'vue-style-loader',
+                'css-loader',
+                'sass-loader'
+              ],
+            }
+          }
         },
         {
           test: /\.js$/,
-          loader: 'babel',
+          loader: 'babel-loader',
           exclude: /node_modules/
         }
       ]
-    },
-    plugins: plugins.concat([
-      new webpack.LoaderOptionsPlugin({
-        vue: {
-          postcss: [
-            autoprefixer({
-              browsers: ['last 2 versions', 'ie >= 10']
-            })
-          ],
-          loaders: {
-            scss: 'vue-style!css!sass'
-          }
-        }
-      })
-    ])
+    }
   };
 
   return config;
