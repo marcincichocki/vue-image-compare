@@ -59,7 +59,10 @@
               </p>
             </div>
 
-            <image-compare :before="before" :after="after" :zoom="zoom"></image-compare>
+            <image-compare :before="before" :after="after" :zoom="zoom" :padding="{ left: 30, right: 30 }">
+              <i class="fa fa-angle-left" aria-hidden="true" slot="icon-left"></i>
+              <i class="fa fa-angle-right" aria-hidden="true" slot="icon-right"></i>
+            </image-compare>
           </div>
         </div>
       </div>
@@ -152,8 +155,8 @@
       </div>
     </footer>
   </main>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js"></script>
-  <script src="../dist/vue-image-compare.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.js"></script>
+  <script src="js/dist/vue-image-compare.js"></script>
   <script src="js/ofi.min.js"></script>
   <script>
     Vue.use(VueImageCompare);

@@ -1,10 +1,12 @@
 <template>
-  <figure class="image-compare" :class="{ full }" @mousemove.prevent="onMouseMove" @touchstart="onMouseMove($event, true)" @touchmove="onMouseMove($event, true)" @click="onMouseMove($event, true)">
-    <div class="image-compare-wrapper" :style="{ width: posX + 'px' }" v-show="!hideAfter">
+  <figure class="image-compare" :class="{ full }" @mousemove.prevent="onMouseMove">
+    <div class="image-compare-wrapper" :style="{ width: posX + 'px' }" v-show="!hideAfter"
+      @mousedown.prevent="onMouseDownImage">
       <img :src="after" :alt="after" :style="dimensions">
     </div>
-    <img :src="before" :alt="before" :style="dimensions">
-    <div class="image-compare-handle" :style="{ left: posX + 'px' }" @mousedown.prevent="onMouseDown" v-show="!hideAfter">
+    <img :src="before" :alt="before" :style="dimensions" @mousedown.prevent="onMouseDownImage">
+    <div class="image-compare-handle" :style="{ left: posX + 'px' }" v-show="!hideAfter"
+      @mousedown.prevent="onMouseDownHandle">
       <span class="image-compare-handle-icon left">
         <slot name="icon-left"></slot>
       </span>
@@ -49,25 +51,42 @@ export default {
       type: Number,
       default: 1,
       required: false,
-    }
+    },
+    reset: Boolean,
   },
   data() {
     return {
       width: null,
       height: null,
       pageX: null,
+      pageY: null,
       posX: null,
-      isDragging: false,
+      isDraggingHandle: false,
+      isDraggingImage: false,
       allowNextFrame: true,
-      unwatch: null
+      unwatch: null,
+      diffX: 0,
+      diffY: 0,
+      shiftX: 0,
+      shiftY: 0,
+    }
+  },
+  watch:{
+    reset() {
+      this.shiftX = 0;
+      this.shiftY = 0;
+      this.setInitialPosX(this.padding.left + this.padding.right);
     }
   },
   computed: {
+    isDragging() {
+      return this.isDraggingImage || this.isDraggingHandle
+    },
     dimensions() {
       return {
         width: `${this.width}px`,
         height: this.full ? `${this.height}px` : 'auto',
-        transform: `scale(${this.zoom})`,
+        transform: `scale(${this.zoom}) translate(${this.shiftX}px, ${this.shiftY}px)`,
       }
     }
   },
@@ -77,38 +96,56 @@ export default {
       this.height = this.$el.clientHeight;
       this.setInitialPosX(this.padding.left + this.padding.right);
     },
-    onMouseDown() {
-			this.isDragging = true;
+    onMouseDownHandle() {
+      this.isDraggingHandle = true;
+    },
+    onMouseDownImage(event) {
+      this.isDraggingImage = true;
     },
     onMouseUp(event) {
       event.preventDefault();
-
-      this.isDragging = false;
+      this.isDraggingHandle = false;
+      this.isDraggingImage = false;
+      this.pageX = null;
+      this.pageY = null;
     },
-    onMouseMove(event, isDragging = this.isDragging) {
-      if (isDragging && this.allowNextFrame) {
+    onMouseMove(event) {
+      if (this.allowNextFrame && this.isDragging) {
         this.allowNextFrame = false;
-        this.pageX = event.pageX || event.targetTouches[0].pageX || event.originalEvent.targetTouches[0].pageX;
+
+        let pageX = event.pageX || event.targetTouches[0].pageX || event.originalEvent.targetTouches[0].pageX;
+        let pageY = event.pageY || event.targetTouches[0].pageY || event.originalEvent.targetTouches[0].pageY;
+
+        this.diffX = this.pageX ? pageX - this.pageX : 0;
+        this.diffY = this.pageY ? pageY - this.pageY : 0;
+
+        this.pageX = pageX;
+        this.pageY = pageY;
 
         window.requestAnimationFrame(this.updatePos);
       }
-		},
+    },
     updatePos() {
-      let posX = this.pageX - this.$el.getBoundingClientRect().left;
+      if (this.isDraggingHandle) {
+        let posX = this.pageX - this.$el.getBoundingClientRect().left;
 
-      if (posX < this.padding.left) {
-        posX = this.padding.left;
-			} else if (posX > this.width - this.padding.right) {
-        posX = this.width - this.padding.right;
+        if (posX < this.padding.left) {
+          posX = this.padding.left;
+        } else if (posX > this.width - this.padding.right) {
+          posX = this.width - this.padding.right;
+        }
+
+        this.posX = posX;
       }
-
-      this.posX = posX;
+      if (this.isDraggingImage) {
+        this.shiftX += this.diffX / this.zoom
+        this.shiftY += this.diffY / this.zoom
+      }
       this.allowNextFrame = true;
     },
     setInitialPosX(padding) {
       if (padding >= this.width) {
         console.error('Sum of paddings is wider then parent element!');
-
         return;
       }
 
@@ -158,7 +195,6 @@ export default {
   img {
     max-width: none;
     display: block;
-    transition: all .2s ease-in-out;
   }
 }
 

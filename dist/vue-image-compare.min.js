@@ -141,6 +141,8 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
+//
 
 exports.default = {
   props: {
@@ -176,26 +178,43 @@ exports.default = {
       type: Number,
       default: 1,
       required: false
-    }
+    },
+    reset: Boolean
   },
   data: function data() {
     return {
       width: null,
       height: null,
       pageX: null,
+      pageY: null,
       posX: null,
-      isDragging: false,
+      isDraggingHandle: false,
+      isDraggingImage: false,
       allowNextFrame: true,
-      unwatch: null
+      unwatch: null,
+      diffX: 0,
+      diffY: 0,
+      shiftX: 0,
+      shiftY: 0
     };
   },
 
+  watch: {
+    reset: function reset() {
+      this.shiftX = 0;
+      this.shiftY = 0;
+      this.setInitialPosX(this.padding.left + this.padding.right);
+    }
+  },
   computed: {
+    isDragging: function isDragging() {
+      return this.isDraggingImage || this.isDraggingHandle;
+    },
     dimensions: function dimensions() {
       return {
         width: this.width + 'px',
         height: this.full ? this.height + 'px' : 'auto',
-        transform: 'scale(' + this.zoom + ')'
+        transform: 'scale(' + this.zoom + ') translate(' + this.shiftX + 'px, ' + this.shiftY + 'px)'
       };
     }
   },
@@ -205,40 +224,56 @@ exports.default = {
       this.height = this.$el.clientHeight;
       this.setInitialPosX(this.padding.left + this.padding.right);
     },
-    onMouseDown: function onMouseDown() {
-      this.isDragging = true;
+    onMouseDownHandle: function onMouseDownHandle() {
+      this.isDraggingHandle = true;
+    },
+    onMouseDownImage: function onMouseDownImage(event) {
+      this.isDraggingImage = true;
     },
     onMouseUp: function onMouseUp(event) {
       event.preventDefault();
-
-      this.isDragging = false;
+      this.isDraggingHandle = false;
+      this.isDraggingImage = false;
+      this.pageX = null;
+      this.pageY = null;
     },
     onMouseMove: function onMouseMove(event) {
-      var isDragging = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.isDragging;
-
-      if (isDragging && this.allowNextFrame) {
+      if (this.allowNextFrame && this.isDragging) {
         this.allowNextFrame = false;
-        this.pageX = event.pageX || event.targetTouches[0].pageX || event.originalEvent.targetTouches[0].pageX;
+
+        var pageX = event.pageX || event.targetTouches[0].pageX || event.originalEvent.targetTouches[0].pageX;
+        var pageY = event.pageY || event.targetTouches[0].pageY || event.originalEvent.targetTouches[0].pageY;
+
+        this.diffX = this.pageX ? pageX - this.pageX : 0;
+        this.diffY = this.pageY ? pageY - this.pageY : 0;
+
+        this.pageX = pageX;
+        this.pageY = pageY;
 
         window.requestAnimationFrame(this.updatePos);
       }
     },
     updatePos: function updatePos() {
-      var posX = this.pageX - this.$el.getBoundingClientRect().left;
+      if (this.isDraggingHandle) {
+        var posX = this.pageX - this.$el.getBoundingClientRect().left;
 
-      if (posX < this.padding.left) {
-        posX = this.padding.left;
-      } else if (posX > this.width - this.padding.right) {
-        posX = this.width - this.padding.right;
+        if (posX < this.padding.left) {
+          posX = this.padding.left;
+        } else if (posX > this.width - this.padding.right) {
+          posX = this.width - this.padding.right;
+        }
+
+        this.posX = posX;
       }
-
-      this.posX = posX;
+      if (this.isDraggingImage) {
+        this.shiftX += this.diffX / this.zoom;
+        this.shiftY += this.diffY / this.zoom;
+      }
       this.allowNextFrame = true;
     },
     setInitialPosX: function setInitialPosX(padding) {
       if (padding >= this.width) {
         console.error('Sum of paddings is wider then parent element!');
-
         return;
       }
 
@@ -300,7 +335,7 @@ exports = module.exports = __webpack_require__(4)();
 
 
 // module
-exports.push([module.i, "\n.image-compare[data-v-2fafb180] {\n  position: relative;\n  margin: 0;\n  overflow: hidden;\n}\n.image-compare.full[data-v-2fafb180] {\n    overflow: hidden;\n    height: 100%;\n    width: 100%;\n    -ms-flex: 1;\n        flex: 1;\n}\n.image-compare.full img[data-v-2fafb180] {\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 100%;\n      height: 100%;\n}\n.image-compare img[data-v-2fafb180] {\n    max-width: none;\n    display: block;\n    transition: all .2s ease-in-out;\n}\n.image-compare-wrapper[data-v-2fafb180],\n.image-compare-handle[data-v-2fafb180] {\n  bottom: 0;\n  position: absolute;\n  top: 0;\n}\n.image-compare-wrapper[data-v-2fafb180] {\n  left: 0;\n  overflow: hidden;\n  width: 100%;\n  z-index: 1;\n  transform: translateZ(0);\n  will-change: width;\n}\n.image-compare-handle[data-v-2fafb180] {\n  color: #fff;\n  background-color: currentColor;\n  cursor: ew-resize;\n  transform: translateX(-50%) translateZ(0);\n  width: 2px;\n  z-index: 2;\n  will-change: left;\n}\n.image-compare-handle-icon[data-v-2fafb180] {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  font-size: 2rem;\n  color: currentColor;\n  line-height: normal;\n}\n.image-compare-handle-icon.left[data-v-2fafb180] {\n    padding-right: 10px;\n    transform: translate(-100%, -50%);\n}\n.image-compare-handle-icon.right[data-v-2fafb180] {\n    padding-left: 10px;\n    transform: translate(0, -50%);\n}\n", ""]);
+exports.push([module.i, "\n.image-compare[data-v-2fafb180] {\n  position: relative;\n  margin: 0;\n  overflow: hidden;\n}\n.image-compare.full[data-v-2fafb180] {\n    overflow: hidden;\n    height: 100%;\n    width: 100%;\n    -ms-flex: 1;\n        flex: 1;\n}\n.image-compare.full img[data-v-2fafb180] {\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 100%;\n      height: 100%;\n}\n.image-compare img[data-v-2fafb180] {\n    max-width: none;\n    display: block;\n}\n.image-compare-wrapper[data-v-2fafb180],\n.image-compare-handle[data-v-2fafb180] {\n  bottom: 0;\n  position: absolute;\n  top: 0;\n}\n.image-compare-wrapper[data-v-2fafb180] {\n  left: 0;\n  overflow: hidden;\n  width: 100%;\n  z-index: 1;\n  transform: translateZ(0);\n  will-change: width;\n}\n.image-compare-handle[data-v-2fafb180] {\n  color: #fff;\n  background-color: currentColor;\n  cursor: ew-resize;\n  transform: translateX(-50%) translateZ(0);\n  width: 2px;\n  z-index: 2;\n  will-change: left;\n}\n.image-compare-handle-icon[data-v-2fafb180] {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  font-size: 2rem;\n  color: currentColor;\n  line-height: normal;\n}\n.image-compare-handle-icon.left[data-v-2fafb180] {\n    padding-right: 10px;\n    transform: translate(-100%, -50%);\n}\n.image-compare-handle-icon.right[data-v-2fafb180] {\n    padding-left: 10px;\n    transform: translate(0, -50%);\n}\n", ""]);
 
 // exports
 
@@ -428,15 +463,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "mousemove": function($event) {
         $event.preventDefault();
         _vm.onMouseMove($event)
-      },
-      "touchstart": function($event) {
-        _vm.onMouseMove($event, true)
-      },
-      "touchmove": function($event) {
-        _vm.onMouseMove($event, true)
-      },
-      "click": function($event) {
-        _vm.onMouseMove($event, true)
       }
     }
   }, [_c('div', {
@@ -449,7 +475,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "image-compare-wrapper",
     style: ({
       width: _vm.posX + 'px'
-    })
+    }),
+    on: {
+      "mousedown": function($event) {
+        $event.preventDefault();
+        _vm.onMouseDownImage($event)
+      }
+    }
   }, [_c('img', {
     style: (_vm.dimensions),
     attrs: {
@@ -461,6 +493,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "src": _vm.before,
       "alt": _vm.before
+    },
+    on: {
+      "mousedown": function($event) {
+        $event.preventDefault();
+        _vm.onMouseDownImage($event)
+      }
     }
   }), _vm._v(" "), _c('div', {
     directives: [{
@@ -476,7 +514,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "mousedown": function($event) {
         $event.preventDefault();
-        _vm.onMouseDown($event)
+        _vm.onMouseDownHandle($event)
       }
     }
   }, [_c('span', {
