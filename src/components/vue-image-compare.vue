@@ -67,7 +67,7 @@ export default {
       diffY: 0,
       shiftX: 0,
       shiftY: 0,
-      mutableZoom: this.zoom
+      mutableZoom: this.zoom,
     }
   },
   watch: {
@@ -260,5 +260,10 @@ export default {
     padding-left: 10px;
     transform: translate(0, -50%);
   }
+}
+.vic-left,
+.vic-right {
+  font-family: monospace;
+  font-style: normal;
 }
 </style>
