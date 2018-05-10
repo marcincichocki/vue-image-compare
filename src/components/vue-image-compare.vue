@@ -52,7 +52,7 @@ export default {
     },
     reset: Boolean,
   },
-  data() {
+  data: function() {
     return {
       width: null,
       height: null,
@@ -66,7 +66,7 @@ export default {
       diffX: 0,
       diffY: 0,
       shiftX: 0,
-      shiftY: 0,
+      shiftY: 0
     }
   },
   watch: {
@@ -143,15 +143,38 @@ export default {
     },
     setInitialPosX(padding) {
       if (padding >= this.width) {
-        console.error('Sum of paddings is wider then parent element!') // eslint-disable-line
+        console.error('Sum of paddings is wider then parent element!')
         return
       }
       this.posX = (this.width + this.padding.left - this.padding.right) / 2
     },
+    debounce(func, wait, immediate) {
+      var timeout
+      return function() {
+        var context = this
+        var args = arguments
+        var later = function() {
+          timeout = null
+          if (!immediate) func.apply(context, args)
+        }
+        var callNow = immediate && !timeout
+        clearTimeout(timeout)
+        timeout = setTimeout(later, wait)
+        if (callNow) func.apply(context, args)
+      }
+    },
+    onWheel(event) {
+      // console.log('should update zoom with event', event)
+      console.log('update zoom with delta', event.deltaY)
+      this.zoom += event.deltaY / 1000
+    },
   },
   created() {
+    // prepare debounced versions
+    var onWheelDebounced = this.debounce(this.onWheel, 200)
     window.addEventListener('mouseup', this.onMouseUp)
     window.addEventListener('resize', this.onResize)
+    window.addEventListener('wheel', onWheelDebounced)
   },
   mounted() {
     this.onResize()
@@ -183,6 +206,7 @@ export default {
       left: 0;
       width: 100%;
       height: 100%;
+      object-fit: cover;
     }
   }
 
