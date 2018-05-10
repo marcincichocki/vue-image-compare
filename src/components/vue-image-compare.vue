@@ -66,7 +66,8 @@ export default {
       diffX: 0,
       diffY: 0,
       shiftX: 0,
-      shiftY: 0
+      shiftY: 0,
+      mutableZoom: this.zoom
     }
   },
   watch: {
@@ -84,7 +85,7 @@ export default {
       return {
         width: `${this.width}px`,
         height: this.full ? `${this.height}px` : 'auto',
-        transform: `scale(${this.zoom}) translate(${this.shiftX}px, ${this.shiftY}px)`,
+        transform: `scale(${this.mutableZoom}) translate(${this.shiftX}px, ${this.shiftY}px)`,
       }
     },
   },
@@ -136,8 +137,8 @@ export default {
         this.posX = posX
       }
       if (this.isDraggingImage) {
-        this.shiftX += this.diffX / this.zoom
-        this.shiftY += this.diffY / this.zoom
+        this.shiftX += this.diffX / this.mutableZoom
+        this.shiftY += this.diffY / this.mutableZoom
       }
       this.allowNextFrame = true
     },
@@ -165,16 +166,16 @@ export default {
     },
     onWheel(event) {
       // console.log('should update zoom with event', event)
-      console.log('update zoom with delta', event.deltaY)
-      this.zoom += event.deltaY / 1000
+      // console.log('update zoom with delta', event.deltaY)
+      this.mutableZoom += event.deltaY / 1000
     },
   },
   created() {
     // prepare debounced versions
-    var onWheelDebounced = this.debounce(this.onWheel, 200)
+    // var onWheelDebounced = this.debounce(this.onWheel, 100)
     window.addEventListener('mouseup', this.onMouseUp)
     window.addEventListener('resize', this.onResize)
-    window.addEventListener('wheel', onWheelDebounced)
+    window.addEventListener('wheel', this.onWheel)
   },
   mounted() {
     this.onResize()
