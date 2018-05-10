@@ -1,25 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Vue Image Compare - vue.js component used to compare 2 images by slider</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-  <style>
-    .image-compare.full img {
-      object-fit: cover;
-      font-family: "object-fit: cover;";
-    }
-  </style>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1"
+    crossorigin="anonymous">
 </head>
+
 <body>
   <main id="app">
     <section class="section is-medium">
       <div class="container has-text-centered">
         <p class="subtitle">
-          <strong>vue-image-compare</strong> is a <a href="//vuejs.org/">vue.js</a> component used to compare 2 images by slider.
+          <strong>vue-image-compare</strong> is a
+          <a href="//vuejs.org/">vue.js</a> component used to compare 2 images by slider.
         </p>
         <code>npm i vue-image-compare</code>
         <div class="hero-buttons">
@@ -77,14 +75,14 @@
       </div>
     </section>
     <div class="hero is-fullheight">
-      <image-compare :before="before" :after="after" :full="true"/>
+      <image-compare :before="before" :after="after" :full="true" />
     </div>
     <section class="section">
       <div class="container">
         <div class="columns">
           <div class="column is-half is-offset-one-quarter">
             <p class="subtitle">Padding</p>
-            <image-compare :before="before" :after="after" :padding="padding"/>
+            <image-compare :before="before" :after="after" :padding="padding" />
           </div>
         </div>
         <div class="columns">
@@ -126,8 +124,7 @@
           <div class="column is-half is-offset-one-quarter">
             <p class="control">
               <label class="checkbox">
-                <input type="checkbox" v-model="hideAfter">
-                Hide after: {{ hideAfter }}
+                <input type="checkbox" v-model="hideAfter"> Hide after: {{ hideAfter }}
               </label>
             </p>
           </div>
@@ -136,14 +133,18 @@
     </section>
     <section class="section">
       <div class="container">
-        <p class="has-text-centered">For code samples and docs go to <a href="//github.com/marcincichocki/vue-image-compare#readme">github</a> page</p>
+        <p class="has-text-centered">For code samples and docs go to
+          <a href="//github.com/marcincichocki/vue-image-compare#readme">github</a> page</p>
       </div>
     </section>
     <footer class="footer">
       <div class="container">
         <div class="content has-text-centered">
           <p>
-            Created by <br><a href="//github.com/marcincichocki">Marcin Cichocki</a><br>
+            Created by
+            <br>
+            <a href="//github.com/marcincichocki">Marcin Cichocki</a>
+            <br>
             <a href="//github.com/marcincichocki/vue-image-compare/blob/master/LICENSE">MIT</a>
           </p>
           <p>
@@ -162,7 +163,7 @@
     Vue.use(VueImageCompare);
 
     var vm = new Vue({
-      data: function() {
+      data: function () {
         return {
           zoom: 1,
           before: 'img/before.jpg',
@@ -172,12 +173,14 @@
             right: 50
           },
           hideAfter: true
-        }
+        };
       }
     }).$mount('#app');
 
     // object-fit polyfill for IEdge9-14, old android and safari
     objectFitImages('.image-compare.full img');
+
   </script>
 </body>
+
 </html>

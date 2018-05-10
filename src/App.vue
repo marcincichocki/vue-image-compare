@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <vue-image-compare before="./img/before.jpg" after="./img/after.jpg" :full="true" />
+    <vue-image-compare before="./img/before.jpg" after="./img/after.jpg" :full="true">
+      <i class="vic-left" aria-hidden="true" slot="icon-left">&lt;</i>
+      <i class="vic-right" aria-hidden="true" slot="icon-right">&gt;</i>
+    </vue-image-compare>
   </div>
 </template>
 
