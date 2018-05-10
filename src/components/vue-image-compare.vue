@@ -1,9 +1,9 @@
 <template>
   <figure class="image-compare" :class="{ full }" @mousemove.prevent="onMouseMove">
     <div class="image-compare-wrapper" :style="{ width: posX + 'px' }" v-show="!hideAfter" @mousedown.prevent="onMouseDownImage">
-      <img :src="after" :alt="after" :style="dimensions">
+      <img :src="mutableAfter" :alt="mutableAfter" :style="dimensions">
     </div>
-    <img :src="before" :alt="before" :style="dimensions" @mousedown.prevent="onMouseDownImage">
+    <img :src="mutableBefore" :alt="mutableBefore" :style="dimensions" @mousedown.prevent="onMouseDownImage">
     <div class="image-compare-handle" :style="{ left: posX + 'px' }" v-show="!hideAfter" @mousedown.prevent="onMouseDownHandle">
       <span class="image-compare-handle-icon left">
         <slot name="icon-left"></slot>
@@ -68,6 +68,8 @@ export default {
       shiftX: 0,
       shiftY: 0,
       mutableZoom: this.zoom,
+      mutableBefore: this.before,
+      mutableAfter: this.after,
     }
   },
   watch: {
@@ -102,11 +104,15 @@ export default {
       this.isDraggingImage = true
     },
     onMouseUp(event) {
+      // console.log('in mouse up', event)
       event.preventDefault()
       this.isDraggingHandle = false
       this.isDraggingImage = false
       this.pageX = null
       this.pageY = null
+      if (event.button === 1) {
+        this.onWheelClick()
+      }
     },
     onMouseMove(event) {
       if (this.allowNextFrame && this.isDragging) {
@@ -169,6 +175,22 @@ export default {
       // console.log('update zoom with delta', event.deltaY)
       this.mutableZoom += event.deltaY / 1000
     },
+    onWheelClick() {
+      // will flick images quickly
+      for (let i = 0; i < 30; i++) {
+        setTimeout(this.switchImages, i * 100)
+      }
+    },
+    onRightClick(event) {
+      // console.log('switching images')
+      event.preventDefault()
+      this.switchImages()
+    },
+    switchImages() {
+      const temp = this.mutableBefore
+      this.mutableBefore = this.mutableAfter
+      this.mutableAfter = temp
+    },
   },
   created() {
     // prepare debounced versions
@@ -176,6 +198,7 @@ export default {
     window.addEventListener('mouseup', this.onMouseUp)
     window.addEventListener('resize', this.onResize)
     window.addEventListener('wheel', this.onWheel)
+    window.addEventListener('contextmenu', this.onRightClick)
   },
   mounted() {
     this.onResize()
@@ -185,6 +208,8 @@ export default {
     this.unwatch()
     window.removeEventListener('mouseup', this.onMouseUp)
     window.removeEventListener('resize', this.onResize)
+    window.removeEventListener('wheel', this.onWheel)
+    window.removeEventListener('contextmenu', this.onRightClick)
   },
 }
 </script>
