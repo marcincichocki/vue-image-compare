@@ -6,13 +6,9 @@
   "bugs": "https://github.com/marcincichocki/vue-image-compare/issues",
   "main": "dist/vue-image-compare.js",
   "scripts": {
-    "build": "npm run build:dev && npm run build:prod",
-    "build:dev": "webpack",
-    "build:prod": "NODE_ENV=prod webpack",
-    "dev": "npm run build:dev -- --watch",
-    "clean": "npm run clean:dist && npm run clean:vendor",
-    "clean:dist": "rimraf dist/",
-    "clean:vendor": "rimraf node_modules/"
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
   },
   "repository": {
     "type": "git",
@@ -28,23 +24,38 @@
   ],
   "author": "Marcin Cichocki <marcincichocki1993@gmail.com>",
   "license": "MIT",
-  "devDependencies": {
-    "autoprefixer": "^6.5.0",
-    "babel-core": "^6.17.0",
-    "babel-loader": "^6.2.5",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-plugin-transform-runtime": "^6.15.0",
-    "babel-preset-es2015": "^6.16.0",
-    "css-loader": "^0.25.0",
-    "node-sass": "^3.10.1",
-    "rimraf": "^2.5.4",
-    "sass-loader": "^4.0.2",
-    "vue-loader": "^10.0.0",
-    "vue-template-compiler": "^2.1.10",
-    "vue-style-loader": "^1.0.0",
-    "webpack": "^2.7.0"
+  "dependencies": {
+    "vue": "^2.5.16"
   },
-  "peerDependencies": {
-    "vue": "^2.0.0"
-  }
+  "devDependencies": {
+    "@types/node-sass": "^3.10.32",
+    "@vue/cli-plugin-babel": "^3.0.0-beta.9",
+    "@vue/cli-plugin-eslint": "^3.0.0-beta.9",
+    "@vue/cli-service": "^3.0.0-beta.9",
+    "node-sass": "^4.9.0",
+    "sass-loader": "^7.0.1",
+    "vue-template-compiler": "^2.5.13"
+  },
+  "babel": {
+    "presets": [
+      "@vue/app"
+    ]
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ]
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
 }
