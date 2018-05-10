@@ -1,7 +1,9 @@
 <template>
   <figure class="image-compare" :class="{ full }" @mousemove.prevent="onMouseMove">
-    <div class="image-compare-wrapper" :style="{ width: posX + 'px' }" v-show="!hideAfter" @mousedown.prevent="onMouseDownImage">
+    <div class="dropzone" :class="{ visible: showDropzone }">Drop 1 or 2 images here !</div>
+    <div class="image-compare-wrapper" :style="{ width: posX + 'px' }" v-show="!hideAfter && showAfter" @mousedown.prevent="onMouseDownImage">
       <img :src="mutableAfter" :alt="mutableAfter" :style="dimensions">
+      <div class="after-name" v-show="showAfter">{{ afterName }}</div>
     </div>
     <img :src="mutableBefore" :alt="mutableBefore" :style="dimensions" @mousedown.prevent="onMouseDownImage">
     <div class="image-compare-handle" :style="{ left: posX + 'px' }" v-show="!hideAfter" @mousedown.prevent="onMouseDownHandle">
@@ -12,6 +14,7 @@
         <slot name="icon-right"></slot>
       </span>
     </div>
+    <div class="before-name">{{ beforeName }}</div>
   </figure>
 </template>
 
@@ -70,6 +73,10 @@ export default {
       mutableZoom: this.zoom,
       mutableBefore: this.before,
       mutableAfter: this.after,
+      showDropzone: false,
+      showAfter: true,
+      beforeName: '',
+      afterName: '',
     }
   },
   watch: {
@@ -115,11 +122,19 @@ export default {
       }
     },
     onMouseMove(event) {
-      if (this.allowNextFrame && this.isDragging) {
+      if (this.allowNextFrame && this.isDragging && event) {
         this.allowNextFrame = false
 
-        let pageX = event.pageX || event.targetTouches[0].pageX || event.originalEvent.targetTouches[0].pageX
-        let pageY = event.pageY || event.targetTouches[0].pageY || event.originalEvent.targetTouches[0].pageY
+        let pageX = event.pageX
+        let pageY = event.pageY
+
+        if (event.targetTouches) {
+          pageX = event.targetTouches[0].pageX
+          pageY = event.targetTouches[0].pageY
+        } else if (event.originalEvent && event.originalEvent.targetTouches) {
+          pageX = event.originalEvent.targetTouches[0].pageX
+          pageY = event.originalEvent.targetTouches[0].pageY
+        }
 
         this.diffX = this.pageX ? pageX - this.pageX : 0
         this.diffY = this.pageY ? pageY - this.pageY : 0
@@ -187,9 +202,57 @@ export default {
       this.switchImages()
     },
     switchImages() {
-      const temp = this.mutableBefore
-      this.mutableBefore = this.mutableAfter
-      this.mutableAfter = temp
+      this.showAfter = !this.showAfter
+    },
+    onDragEnter(event) {
+      console.log('onDragEnter')
+      // event.preventDefault()
+      this.showDropzone = true
+    },
+    onDragLeave(event) {
+      console.log('onDragLeave')
+      event.preventDefault()
+      this.showDropzone = false
+    },
+    onDragOver(event) {
+      // console.log('onDragOver')
+      event.preventDefault()
+      // this.showDropzone = true
+    },
+    onDrop(event) {
+      // console.log('onDrop', event)
+      event.preventDefault()
+      this.showDropzone = false
+      // console.log('drop', event)
+      var files = event.dataTransfer.files
+      if (files.length === 1) {
+        console.log('drop file :', files[0])
+        const x = event.x
+        const half = Math.round(window.outerWidth / 2)
+        const leftSide = x <= half
+        console.log('x ?', x)
+        console.log('half ?', half)
+        console.log('was on left side ?', leftSide)
+        this.loadFile(files[0], leftSide)
+      } else {
+        console.log('drop files :', files)
+        this.loadFile(files[0], true)
+        this.loadFile(files[1], false)
+      }
+      this.onResize()
+    },
+    loadFile(file, leftSide) {
+      var reader = new FileReader()
+      reader.onload = event => {
+        if (leftSide) {
+          this.afterName = file.name
+          this.mutableAfter = event.target.result
+        } else {
+          this.beforeName = file.name
+          this.mutableBefore = event.target.result
+        }
+      }
+      reader.readAsDataURL(file)
     },
   },
   created() {
@@ -199,6 +262,10 @@ export default {
     window.addEventListener('resize', this.onResize)
     window.addEventListener('wheel', this.onWheel)
     window.addEventListener('contextmenu', this.onRightClick)
+    window.addEventListener('dragenter', this.onDragEnter)
+    // window.addEventListener('dragleave', this.onDragLeave)
+    window.addEventListener('dragover', this.onDragOver)
+    window.addEventListener('drop', this.onDrop)
   },
   mounted() {
     this.onResize()
@@ -210,6 +277,10 @@ export default {
     window.removeEventListener('resize', this.onResize)
     window.removeEventListener('wheel', this.onWheel)
     window.removeEventListener('contextmenu', this.onRightClick)
+    window.removeEventListener('dragenter', this.onDragEnter)
+    // window.removeEventListener('dragleave', this.onDragLeave)
+    window.removeEventListener('dragover', this.onDragOver)
+    window.removeEventListener('drop', this.onDrop)
   },
 }
 </script>
@@ -232,7 +303,7 @@ export default {
       left: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
     }
   }
 
@@ -290,5 +361,49 @@ export default {
 .vic-right {
   font-family: monospace;
   font-style: normal;
+}
+.after-name,
+.before-name {
+  position: absolute;
+  z-index: 5;
+  bottom: 0;
+  padding: 7px 12px;
+  background-color: white;
+  font-family: sans-serif;
+  /* font-weight: bold; */
+  font-size: 21px;
+  pointer-events: none;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: block;
+  &.after-name {
+    left: 0;
+    border-top-right-radius: 12px;
+  }
+  &.before-name {
+    right: 0;
+    border-top-left-radius: 12px;
+  }
+}
+.dropzone {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #00000099;
+  z-index: 10;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+  opacity: 0;
+  pointer-events: none;
+  &.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
 }
 </style>
