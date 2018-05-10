@@ -1,8 +1,9 @@
 <template>
   <figure class="image-compare" :class="{ full }" @mousemove.prevent="onMouseMove">
     <div class="dropzone" :class="{ visible: showDropzone }">Drop 1 or 2 images here !</div>
-    <div class="image-compare-wrapper" :style="{ width: posX + 'px', display: showWrapper ? 'block':'none' }" v-show="!hideAfter" @mousedown.prevent="onMouseDownImage">
+    <div class="image-compare-wrapper" :style="{ width: posX + 'px' }" v-show="!hideAfter && showAfter" @mousedown.prevent="onMouseDownImage">
       <img :src="mutableAfter" :alt="mutableAfter" :style="dimensions">
+      <div class="after-name" v-show="showAfter">{{ afterName }}</div>
     </div>
     <img :src="mutableBefore" :alt="mutableBefore" :style="dimensions" @mousedown.prevent="onMouseDownImage">
     <div class="image-compare-handle" :style="{ left: posX + 'px' }" v-show="!hideAfter" @mousedown.prevent="onMouseDownHandle">
@@ -13,6 +14,7 @@
         <slot name="icon-right"></slot>
       </span>
     </div>
+    <div class="before-name">{{ beforeName }}</div>
   </figure>
 </template>
 
@@ -72,7 +74,9 @@ export default {
       mutableBefore: this.before,
       mutableAfter: this.after,
       showDropzone: false,
-      showWrapper: true,
+      showAfter: true,
+      beforeName: '',
+      afterName: '',
     }
   },
   watch: {
@@ -118,11 +122,19 @@ export default {
       }
     },
     onMouseMove(event) {
-      if (this.allowNextFrame && this.isDragging) {
+      if (this.allowNextFrame && this.isDragging && event) {
         this.allowNextFrame = false
 
-        let pageX = event.pageX || event.targetTouches[0].pageX || event.originalEvent.targetTouches[0].pageX
-        let pageY = event.pageY || event.targetTouches[0].pageY || event.originalEvent.targetTouches[0].pageY
+        let pageX = event.pageX
+        let pageY = event.pageY
+
+        if (event.targetTouches) {
+          pageX = event.targetTouches[0].pageX
+          pageY = event.targetTouches[0].pageY
+        } else if (event.originalEvent && event.originalEvent.targetTouches) {
+          pageX = event.originalEvent.targetTouches[0].pageX
+          pageY = event.originalEvent.targetTouches[0].pageY
+        }
 
         this.diffX = this.pageX ? pageX - this.pageX : 0
         this.diffY = this.pageY ? pageY - this.pageY : 0
@@ -190,7 +202,7 @@ export default {
       this.switchImages()
     },
     switchImages() {
-      this.showWrapper = !this.showWrapper
+      this.showAfter = !this.showAfter
     },
     onDragEnter(event) {
       console.log('onDragEnter')
@@ -233,8 +245,10 @@ export default {
       var reader = new FileReader()
       reader.onload = event => {
         if (leftSide) {
+          this.afterName = file.name
           this.mutableAfter = event.target.result
         } else {
+          this.beforeName = file.name
           this.mutableBefore = event.target.result
         }
       }
@@ -347,6 +361,30 @@ export default {
 .vic-right {
   font-family: monospace;
   font-style: normal;
+}
+.after-name,
+.before-name {
+  position: absolute;
+  z-index: 5;
+  bottom: 0;
+  padding: 7px 12px;
+  background-color: white;
+  font-family: sans-serif;
+  /* font-weight: bold; */
+  font-size: 21px;
+  pointer-events: none;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: block;
+  &.after-name {
+    left: 0;
+    border-top-right-radius: 12px;
+  }
+  &.before-name {
+    right: 0;
+    border-top-left-radius: 12px;
+  }
 }
 .dropzone {
   position: absolute;
