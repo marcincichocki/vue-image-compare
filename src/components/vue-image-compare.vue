@@ -1,12 +1,10 @@
 <template>
   <figure class="image-compare" :class="{ full }" @mousemove.prevent="onMouseMove">
-    <div class="image-compare-wrapper" :style="{ width: posX + 'px' }" v-show="!hideAfter"
-      @mousedown.prevent="onMouseDownImage">
+    <div class="image-compare-wrapper" :style="{ width: posX + 'px' }" v-show="!hideAfter" @mousedown.prevent="onMouseDownImage">
       <img :src="after" :alt="after" :style="dimensions">
     </div>
     <img :src="before" :alt="before" :style="dimensions" @mousedown.prevent="onMouseDownImage">
-    <div class="image-compare-handle" :style="{ left: posX + 'px' }" v-show="!hideAfter"
-      @mousedown.prevent="onMouseDownHandle">
+    <div class="image-compare-handle" :style="{ left: posX + 'px' }" v-show="!hideAfter" @mousedown.prevent="onMouseDownHandle">
       <span class="image-compare-handle-icon left">
         <slot name="icon-left"></slot>
       </span>
@@ -22,30 +20,30 @@ export default {
   props: {
     before: {
       type: String,
-      required: true
+      required: true,
     },
     after: {
       type: String,
-      required: true
+      required: true,
     },
     full: {
       type: Boolean,
-      default: false
+      default: false,
     },
     padding: {
       type: Object,
       default() {
         return {
           left: 0,
-          right: 0
+          right: 0,
         }
       },
-      required: false
+      required: false,
     },
     hideAfter: {
       type: Boolean,
       default: false,
-      required: false
+      required: false,
     },
     zoom: {
       type: Number,
@@ -71,12 +69,12 @@ export default {
       shiftY: 0,
     }
   },
-  watch:{
+  watch: {
     reset() {
-      this.shiftX = 0;
-      this.shiftY = 0;
-      this.setInitialPosX(this.padding.left + this.padding.right);
-    }
+      this.shiftX = 0
+      this.shiftY = 0
+      this.setInitialPosX(this.padding.left + this.padding.right)
+    },
   },
   computed: {
     isDragging() {
@@ -88,87 +86,83 @@ export default {
         height: this.full ? `${this.height}px` : 'auto',
         transform: `scale(${this.zoom}) translate(${this.shiftX}px, ${this.shiftY}px)`,
       }
-    }
+    },
   },
   methods: {
     onResize() {
-      this.width = this.$el.clientWidth;
-      this.height = this.$el.clientHeight;
-      this.setInitialPosX(this.padding.left + this.padding.right);
+      this.width = this.$el.clientWidth
+      this.height = this.$el.clientHeight
+      this.setInitialPosX(this.padding.left + this.padding.right)
     },
     onMouseDownHandle() {
-      this.isDraggingHandle = true;
+      this.isDraggingHandle = true
     },
-    onMouseDownImage(event) {
-      this.isDraggingImage = true;
+    onMouseDownImage() {
+      this.isDraggingImage = true
     },
     onMouseUp(event) {
-      event.preventDefault();
-      this.isDraggingHandle = false;
-      this.isDraggingImage = false;
-      this.pageX = null;
-      this.pageY = null;
+      event.preventDefault()
+      this.isDraggingHandle = false
+      this.isDraggingImage = false
+      this.pageX = null
+      this.pageY = null
     },
     onMouseMove(event) {
       if (this.allowNextFrame && this.isDragging) {
-        this.allowNextFrame = false;
+        this.allowNextFrame = false
 
-        let pageX = event.pageX || event.targetTouches[0].pageX || event.originalEvent.targetTouches[0].pageX;
-        let pageY = event.pageY || event.targetTouches[0].pageY || event.originalEvent.targetTouches[0].pageY;
+        let pageX = event.pageX || event.targetTouches[0].pageX || event.originalEvent.targetTouches[0].pageX
+        let pageY = event.pageY || event.targetTouches[0].pageY || event.originalEvent.targetTouches[0].pageY
 
-        this.diffX = this.pageX ? pageX - this.pageX : 0;
-        this.diffY = this.pageY ? pageY - this.pageY : 0;
+        this.diffX = this.pageX ? pageX - this.pageX : 0
+        this.diffY = this.pageY ? pageY - this.pageY : 0
 
-        this.pageX = pageX;
-        this.pageY = pageY;
+        this.pageX = pageX
+        this.pageY = pageY
 
-        window.requestAnimationFrame(this.updatePos);
+        window.requestAnimationFrame(this.updatePos)
       }
     },
     updatePos() {
       if (this.isDraggingHandle) {
-        let posX = this.pageX - this.$el.getBoundingClientRect().left;
+        let posX = this.pageX - this.$el.getBoundingClientRect().left
 
         if (posX < this.padding.left) {
-          posX = this.padding.left;
+          posX = this.padding.left
         } else if (posX > this.width - this.padding.right) {
-          posX = this.width - this.padding.right;
+          posX = this.width - this.padding.right
         }
 
-        this.posX = posX;
+        this.posX = posX
       }
       if (this.isDraggingImage) {
         this.shiftX += this.diffX / this.zoom
         this.shiftY += this.diffY / this.zoom
       }
-      this.allowNextFrame = true;
+      this.allowNextFrame = true
     },
     setInitialPosX(padding) {
       if (padding >= this.width) {
-        console.error('Sum of paddings is wider then parent element!');
-        return;
+        console.error('Sum of paddings is wider then parent element!') // eslint-disable-line
+        return
       }
-
-      this.posX = (this.width + this.padding.left - this.padding.right) / 2;
-    }
+      this.posX = (this.width + this.padding.left - this.padding.right) / 2
+    },
   },
   created() {
-    window.addEventListener('mouseup', this.onMouseUp);
-    window.addEventListener('resize', this.onResize);
+    window.addEventListener('mouseup', this.onMouseUp)
+    window.addEventListener('resize', this.onResize)
   },
   mounted() {
-    this.onResize();
-    this.unwatch = this.$watch(
-      () => this.padding.left + this.padding.right,
-      (newValue) => this.setInitialPosX(newValue)
-    );
+    this.onResize()
+    this.unwatch = this.$watch(() => this.padding.left + this.padding.right, newValue => this.setInitialPosX(newValue))
   },
   beforeDestroy() {
-    this.unwatch();
-    window.removeEventListener('mouseup', this.onMouseUp);
-    window.removeEventListener('resize', this.onResize);
-  }
-};
+    this.unwatch()
+    window.removeEventListener('mouseup', this.onMouseUp)
+    window.removeEventListener('resize', this.onResize)
+  },
+}
 </script>
 
 <style lang="scss" scoped>

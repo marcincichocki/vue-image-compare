@@ -1,31 +1,27 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <vue-image-compare before="./img/before.jpg" after="./img/after.jpg" :full="true" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import VueImageCompare from './components/vue-image-compare.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
-  }
+    VueImageCompare,
+  },
 }
 </script>
 
 <style lang="scss">
+html,
+body,
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-
-  img {
-    background-color: lightblue;
-    border-radius: 50%;
-  }
+  height: 100%;
+}
+body {
+  margin: 0;
 }
 </style>
