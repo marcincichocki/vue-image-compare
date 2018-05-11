@@ -192,9 +192,12 @@ export default {
     },
     onWheelClick() {
       // will flick images quickly
-      for (let i = 0; i < 30; i++) {
+      let i = 0
+      for (i = 0; i < 30; i++) {
         setTimeout(this.switchImages, i * 100)
       }
+      // reset after visibility
+      setTimeout(() => (this.showAfter = true), i * 100)
     },
     onRightClick(event) {
       // console.log('switching images')
@@ -241,6 +244,8 @@ export default {
       }
       // reset zoom
       this.mutableZoom = 1
+      // reset after visibility
+      this.showAfter = true
       this.onResize()
     },
     loadFile(file, leftSide) {
