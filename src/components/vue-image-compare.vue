@@ -239,6 +239,8 @@ export default {
         this.loadFile(files[0], true)
         this.loadFile(files[1], false)
       }
+      // reset zoom
+      this.mutableZoom = 1
       this.onResize()
     },
     loadFile(file, leftSide) {
