@@ -3,7 +3,9 @@
     <div class="dropzone" :class="{ visible: showDropzone }">Drop 1 or 2 images here !</div>
     <div class="image-compare-wrapper" :style="{ width: posX + 'px' }" v-show="!hideAfter && showAfter" @mousedown.prevent="onMouseDownImage">
       <img :src="mutableAfter" :alt="mutableAfter" :style="dimensions">
-      <div class="after-name" v-show="showAfter">{{ afterName }}</div>
+      <div class="after-name" v-show="showAfter">{{ afterName }}
+        <div class="size">{{ afterSize }}</div>
+      </div>
     </div>
     <img :src="mutableBefore" :alt="mutableBefore" :style="dimensions" @mousedown.prevent="onMouseDownImage">
     <div class="image-compare-handle" :style="{ left: posX + 'px' }" v-show="!hideAfter" @mousedown.prevent="onMouseDownHandle">
@@ -14,7 +16,9 @@
         <slot name="icon-right"></slot>
       </span>
     </div>
-    <div class="before-name">{{ beforeName }}</div>
+    <div class="before-name">{{ beforeName }}
+      <div class="size">{{ beforeSize }}</div>
+    </div>
   </figure>
 </template>
 
@@ -76,7 +80,9 @@ export default {
       showDropzone: false,
       showAfter: true,
       beforeName: '',
+      beforeSize: '',
       afterName: '',
+      afterSize: '',
     }
   },
   watch: {
@@ -248,14 +254,22 @@ export default {
       this.showAfter = true
       this.onResize()
     },
+    getFileName(file) {
+      return file.name
+    },
+    getFileSize(file) {
+      return '(' + Math.round(file.size / 1024) + ' Ko)'
+    },
     loadFile(file, leftSide) {
       var reader = new FileReader()
       reader.onload = event => {
         if (leftSide) {
-          this.afterName = file.name
+          this.afterName = this.getFileName(file)
+          this.afterSize = this.getFileSize(file)
           this.mutableAfter = event.target.result
         } else {
-          this.beforeName = file.name
+          this.beforeName = this.getFileName(file)
+          this.beforeSize = this.getFileSize(file)
           this.mutableBefore = event.target.result
         }
       }
@@ -391,6 +405,15 @@ export default {
   &.before-name {
     right: 0;
     border-top-left-radius: 12px;
+    .size {
+      text-align: right;
+    }
+  }
+  .size {
+    font-family: monospace;
+    color: gray;
+    font-size: 19px;
+    margin-top: 2px;
   }
 }
 .dropzone {
