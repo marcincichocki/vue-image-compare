@@ -1,7 +1,20 @@
 # Vue Image Compare
 
+## Purpose of this fork
+
+- allow drag & drop images to compare them
+- allow drag & drop of a single image to change only one side
+- allow zoom & pan of the comparison to see details
+
+You can see the updated features of this fork on : https://image-compare.netlify.com/
+
+And still check the original author website : https://marcincichocki.github.io/vue-image-compare/
+
+Bellow, the original readme :
+
 ## Requirements
-* [Vue.js](http://vuejs.org/) (^2.0.0)
+
+- [Vue.js](http://vuejs.org/) (^2.0.0)
 
 ## Installation
 
