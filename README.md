@@ -35,7 +35,7 @@ At Vue bootstrap :
 
 ```javascript
 import Vue from 'vue'
-import imageCompare from 'vue-image-compare'
+import imageCompare from 'vue-image-compare2'
 
 new Vue({
     components: {
@@ -53,7 +53,7 @@ new Vue({
 or inside another component :
 
 ```javascript
-import imageCompare from 'vue-image-compare'
+import imageCompare from 'vue-image-compare2'
 
 export default {
    data() {
