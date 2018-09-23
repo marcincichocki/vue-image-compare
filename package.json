@@ -1,6 +1,6 @@
 {
   "name": "@shuunen/vue-image-compare-2",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "description": "Compare two images via slider using vue.js",
   "homepage": "https://github.com/marcincichocki/vue-image-compare",
   "bugs": "https://github.com/marcincichocki/vue-image-compare/issues",
