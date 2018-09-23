@@ -26,7 +26,7 @@ And still check the original author website : [https://marcincichocki.github.io/
 ## Installation
 
 ```bash
-yarn add vue-image-compare-2 # or npm i vue-image-compare-2 --save
+yarn add vue-image-compare2 # or npm i vue-image-compare2 --save
 ```
 
 ## Usage
