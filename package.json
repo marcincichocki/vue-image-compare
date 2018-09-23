@@ -1,6 +1,6 @@
 {
   "name": "vue-image-compare2",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "Compare two images via slider using vue.js",
   "homepage": "https://github.com/Shuunen/vue-image-compare",
   "bugs": "https://github.com/Shuunen/vue-image-compare/issues",
@@ -20,7 +20,10 @@
     "slider",
     "component"
   ],
-  "contributors": ["Romain Racamier-Lafon <romain.racamier@gmail.com> (https://github.com/Shuunen)", "Ctf0 (https://github.com/ctf0)"],
+  "contributors": [
+    "Romain Racamier-Lafon <romain.racamier@gmail.com> (https://github.com/Shuunen)",
+    "Ctf0 (https://github.com/ctf0)"
+  ],
   "author": "Marcin Cichocki <marcincichocki1993@gmail.com>",
   "license": "MIT",
   "peerDependecies": {
