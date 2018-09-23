@@ -4,11 +4,9 @@
   "description": "Compare two images via slider using vue.js",
   "homepage": "https://github.com/marcincichocki/vue-image-compare",
   "bugs": "https://github.com/marcincichocki/vue-image-compare/issues",
-  "main": "dist/vue-image-compare.js",
+  "main": "src/vue-image-compare.vue",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "build": "node --eval \"console.log('no need to build :p')\""
   },
   "repository": {
     "type": "git",
@@ -24,38 +22,7 @@
   ],
   "author": "Marcin Cichocki <marcincichocki1993@gmail.com>",
   "license": "MIT",
-  "dependencies": {
-    "vue": "^2.5.16"
-  },
-  "devDependencies": {
-    "@types/node-sass": "^3.10.32",
-    "@vue/cli-plugin-babel": "^3.0.0-beta.9",
-    "@vue/cli-plugin-eslint": "^3.0.0-beta.9",
-    "@vue/cli-service": "^3.0.0-beta.9",
-    "node-sass": "^4.9.0",
-    "sass-loader": "^7.0.1",
-    "vue-template-compiler": "^2.5.13"
-  },
-  "babel": {
-    "presets": [
-      "@vue/app"
-    ]
-  },
-  "eslintConfig": {
-    "root": true,
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ]
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ]
+  "peerDependecies": {
+    "vue": "^2.0.0"
+  }
 }
