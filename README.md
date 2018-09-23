@@ -1,6 +1,8 @@
-# Vue Image Compare
+# Vue Image Compare 2
 
 ## Purpose of this fork
+
+**Updates** (original repo seems dead) & new **features** :)
 
 **simple images loading** via drag & drop files into browser, will load images locally (no upload to any server)
 
@@ -11,6 +13,7 @@
 
 * allow click & drag
 * allow zoom
+* allow midddle click to start flickering left image for seconds
 
 You can see the updated features of this fork on : [https://image-compare.netlify.com](https://image-compare.netlify.com)
 
@@ -23,7 +26,7 @@ And still check the original author website : [https://marcincichocki.github.io/
 ## Installation
 
 ```bash
-npm i vue-image-compare --save
+yarn add vue-image-compare-2 # or npm i vue-image-compare-2 --save
 ```
 
 ## Usage
@@ -122,6 +125,10 @@ Example:
 ### Events
 
 * `@movment` - when image/handle is dragged left/right
+
+## Thanks
+
+* [ctf0](https://github.com/ctf0) : for his contributions <3
 
 ## License
 
