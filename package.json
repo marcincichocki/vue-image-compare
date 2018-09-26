@@ -1,22 +1,16 @@
 {
-  "name": "vue-image-compare",
-  "version": "0.6.1",
+  "name": "vue-image-compare2",
+  "version": "0.7.1",
   "description": "Compare two images via slider using vue.js",
-  "homepage": "https://github.com/marcincichocki/vue-image-compare",
-  "bugs": "https://github.com/marcincichocki/vue-image-compare/issues",
-  "main": "dist/vue-image-compare.js",
+  "homepage": "https://github.com/Shuunen/vue-image-compare",
+  "bugs": "https://github.com/Shuunen/vue-image-compare/issues",
+  "main": "src/vue-image-compare.vue",
   "scripts": {
-    "build": "npm run build:dev && npm run build:prod",
-    "build:dev": "webpack",
-    "build:prod": "NODE_ENV=prod webpack",
-    "dev": "npm run build:dev -- --watch",
-    "clean": "npm run clean:dist && npm run clean:vendor",
-    "clean:dist": "rimraf dist/",
-    "clean:vendor": "rimraf node_modules/"
+    "build": "node --eval \"console.log('no need to build :p')\""
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/marcincichocki/vue-image-compare.git"
+    "url": "https://github.com/Shuunen/vue-image-compare.git"
   },
   "keywords": [
     "vue",
@@ -26,25 +20,13 @@
     "slider",
     "component"
   ],
+  "contributors": [
+    "Romain Racamier-Lafon <romain.racamier@gmail.com> (https://github.com/Shuunen)",
+    "Ctf0 (https://github.com/ctf0)"
+  ],
   "author": "Marcin Cichocki <marcincichocki1993@gmail.com>",
   "license": "MIT",
-  "devDependencies": {
-    "autoprefixer": "^6.5.0",
-    "babel-core": "^6.17.0",
-    "babel-loader": "^6.2.5",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-plugin-transform-runtime": "^6.15.0",
-    "babel-preset-es2015": "^6.16.0",
-    "css-loader": "^0.25.0",
-    "node-sass": "^3.10.1",
-    "rimraf": "^2.5.4",
-    "sass-loader": "^4.0.2",
-    "vue-loader": "^10.0.0",
-    "vue-template-compiler": "^2.1.10",
-    "vue-style-loader": "^1.0.0",
-    "webpack": "^2.1.0-beta.25"
-  },
-  "peerDependencies": {
+  "peerDependecies": {
     "vue": "^2.0.0"
   }
 }
