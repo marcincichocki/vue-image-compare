@@ -24,14 +24,14 @@ And still check the original author website : [https://marcincichocki.github.io/
 ## Installation
 
 ```bash
-yarn add vue-image-compare2 
-# or 
+yarn add vue-image-compare2
+# or
 npm i vue-image-compare2 --save
 ```
 
 ## Usage
 
-- register the componenet **Globally**
+* register the componenet **Globally** :
 
 ```javascript
 import Vue from 'vue'
@@ -50,7 +50,7 @@ new Vue({
 }).$mount('#app')
 ```
 
-or **locally**
+or **locally** :
 
 ```javascript
 import imageCompare from 'vue-image-compare2'
@@ -68,7 +68,7 @@ export default {
 }
 ```
 
-- Then you can use `image-compare` with a minimal init :
+* Then you can use `image-compare` with a minimal init :
 
 ```html
 <div id="app">
