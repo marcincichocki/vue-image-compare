@@ -128,7 +128,7 @@ Example:
 
 ## Thanks
 
-* [ctf0](https://github.com/ctf0) : for his contributions <3
+* [ctf0](https://github.com/ctf0) : for his multiple contributions :heart:
 
 ## License
 
