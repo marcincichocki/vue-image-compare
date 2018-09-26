@@ -129,7 +129,7 @@ export default {
             }
         }
     },
-    data: function() {
+    data() {
         return {
             width: null,
             height: null,
@@ -139,7 +139,6 @@ export default {
             isDraggingHandle: false,
             isDraggingImage: false,
             allowNextFrame: true,
-            unwatch: null,
             diffX: 0,
             diffY: 0,
             shiftX: 0,
@@ -173,6 +172,9 @@ export default {
                 height: this.full ? `${this.height}px` : 'auto',
                 transform: `scale(${zoom}) translate(${this.shiftX}px, ${this.shiftY}px)`
             }
+        },
+        paddingTotal() {
+            return this.padding.left + this.padding.right
         }
     },
     created() {
@@ -180,7 +182,6 @@ export default {
         // var onWheelDebounced = this.debounce(this.onWheel, 100)
         window.addEventListener('mouseup', this.onMouseUp)
         window.addEventListener('resize', this.onResize)
-        window.addEventListener('wheel', this.onWheel)
         window.addEventListener('contextmenu', this.onRightClick)
         window.addEventListener('dragenter', this.onDragEnter)
         // window.addEventListener('dragleave', this.onDragLeave)
@@ -188,14 +189,13 @@ export default {
         window.addEventListener('drop', this.onDrop)
     },
     mounted() {
+        this.$el.addEventListener('wheel', this.onWheel)
         this.onResize()
-        this.unwatch = this.$watch(() => this.padding.left + this.padding.right, (newValue) => this.setInitialPosX(newValue))
     },
     beforeDestroy() {
-        this.unwatch()
         window.removeEventListener('mouseup', this.onMouseUp)
         window.removeEventListener('resize', this.onResize)
-        window.removeEventListener('wheel', this.onWheel)
+        this.$el.removeEventListener('wheel', this.onWheel)
         window.removeEventListener('contextmenu', this.onRightClick)
         window.removeEventListener('dragenter', this.onDragEnter)
         // window.removeEventListener('dragleave', this.onDragLeave)
@@ -206,7 +206,7 @@ export default {
         onResize() {
             this.width = this.$el.clientWidth
             this.height = this.$el.clientHeight
-            this.setInitialPosX(this.padding.left + this.padding.right)
+            this.setInitialPosX()
         },
 
         // mouse
@@ -262,13 +262,15 @@ export default {
 
         // position
         updatePos() {
-            if (this.isDraggingHandle) {
+            if (!this.isDraggable || (this.isDraggable && this.isDraggingHandle)) {
                 let posX = this.pageX - this.$el.getBoundingClientRect().left
+                let pr = this.padding.right
+                let pl = this.padding.left
 
-                if (posX < this.padding.left) {
-                    posX = this.padding.left
-                } else if (posX > this.width - this.padding.right) {
-                    posX = this.width - this.padding.right
+                if (posX < pl) {
+                    posX = pl
+                } else if (posX > this.width - pr) {
+                    posX = this.width - pr
                 }
 
                 this.posX = posX
@@ -281,8 +283,8 @@ export default {
 
             this.allowNextFrame = true
         },
-        setInitialPosX(padding) {
-            if (padding >= this.width) {
+        setInitialPosX() {
+            if (this.paddingTotal >= this.width) {
                 return console.error('Sum of paddings is wider then parent element!')
             }
 
@@ -424,7 +426,10 @@ export default {
         reset() {
             this.shiftX = 0
             this.shiftY = 0
-            this.setInitialPosX(this.padding.left + this.padding.right)
+            this.setInitialPosX()
+        },
+        paddingTotal(val) {
+            this.setInitialPosX()
         }
     }
 }
