@@ -1,3 +1,4 @@
+var path = require('path')
 var webpack = require('webpack');
 var autoprefixer = require('autoprefixer');
 
@@ -29,7 +30,7 @@ module.exports = function makeWebpackConfig() {
   var config = {
     entry: './src/index.js',
     output: {
-      path: './dist/',
+      path: path.resolve('./dist'),
       filename: outputFileName,
       library: 'VueImageCompare',
       libraryTarget: 'umd'
@@ -45,11 +46,11 @@ module.exports = function makeWebpackConfig() {
       loaders: [
         {
           test: /\.vue$/,
-          loader: 'vue'
+          loader: 'vue-loader'
         },
         {
           test: /\.js$/,
-          loader: 'babel',
+          loader: 'babel-loader',
           exclude: /node_modules/
         }
       ]
@@ -63,7 +64,7 @@ module.exports = function makeWebpackConfig() {
             })
           ],
           loaders: {
-            scss: 'vue-style!css!sass'
+            scss: 'vue-style-loader!css-loader!sass-loader'
           }
         }
       })
