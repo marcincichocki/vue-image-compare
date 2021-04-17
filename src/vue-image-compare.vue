@@ -82,7 +82,8 @@ export default {
     onMouseMove(event, isDragging = this.isDragging) {
       if (isDragging && this.allowNextFrame) {
         this.allowNextFrame = false;
-        this.pageX = event.pageX || event.targetTouches[0].pageX || event.originalEvent.targetTouches[0].pageX;
+        let x = event.pageX;
+        this.pageX = +(x !== 0) && (x || event.targetTouches[0].pageX || event.originalEvent.targetTouches[0].pageX);
 
         window.requestAnimationFrame(this.updatePos);
       }
